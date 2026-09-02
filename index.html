@@ -1,0 +1,1836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Year 10 Fundamental Chemistry: Revision</title>
+<style>
+  :root{
+    --cream:#FAF3E0;
+    --ink:#2b2b2b;
+    --teal:#2f6f6b;
+    --teal-dark:#204d4a;
+    --amber:#b8860b;
+    --amber-bg:#fff3d6;
+    --red:#a4322a;
+    --red-bg:#fbe4e1;
+    --green:#2e7d4f;
+    --green-bg:#e3f3e8;
+    --blue:#2d5f8a;
+    --blue-bg:#e6f0f7;
+    --card:#ffffff;
+    --border:#d8cba9;
+  }
+  *{box-sizing:border-box;}
+  body{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12pt;
+    background: var(--cream);
+    color: var(--ink);
+    margin:0;
+    padding:0;
+    line-height:1.5;
+  }
+  header.site{
+    background: var(--teal-dark);
+    color:#fff;
+    padding: 14px 16px;
+    text-align:center;
+  }
+  header.site h1{ margin:0; font-size:1.4em; }
+  header.site p{ margin:4px 0 0; font-size:0.85em; opacity:0.9; }
+
+  nav.tabs{
+    position: sticky; top:0; z-index: 50;
+    background: var(--teal);
+    display:flex; flex-wrap:wrap;
+    gap:4px; padding:8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  }
+  nav.tabs button{
+    flex: 1 1 140px;
+    background: var(--teal-dark);
+    color:#fff; border:none; border-radius:8px;
+    padding:10px 8px; font-family:inherit; font-size:0.85em;
+    cursor:pointer; opacity:0.85;
+  }
+  nav.tabs button.active{ background:#fff; color:var(--teal-dark); opacity:1; font-weight:bold; }
+  nav.tabs button.disabled{ opacity:0.45; cursor:default; }
+
+  main{ max-width: 900px; margin: 0 auto; padding: 14px 14px 60px; }
+  .topic{ display:none; }
+  .topic.active{ display:block; }
+
+  .comingsoon{ background:var(--card); border:2px dashed var(--border); border-radius:12px; padding:30px; text-align:center; color:#666; }
+
+  .panel{
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 14px;
+    overflow:hidden;
+  }
+  .panel > .panel-head{
+    width:100%; text-align:left; background: var(--blue-bg);
+    border:none; padding:12px 14px; font-family:inherit; font-size:1em;
+    cursor:pointer; display:flex; justify-content:space-between; align-items:center;
+    font-weight:bold; color: var(--blue);
+  }
+  .panel > .panel-body{ padding: 14px; display:none; }
+  .panel.open > .panel-body{ display:block; }
+  .panel > .panel-head .chev{ transition: transform 0.2s; }
+  .panel.open > .panel-head .chev{ transform: rotate(90deg); }
+
+  .step{ border:2px solid var(--border); border-radius:12px; margin-bottom:16px; background:var(--card); overflow:hidden;}
+  .step > .step-head{
+    width:100%; text-align:left; background: var(--teal); color:#fff;
+    border:none; padding:12px 14px; font-size:1.05em; font-weight:bold;
+    cursor:pointer; display:flex; justify-content:space-between; align-items:center;
+    font-family:inherit;
+  }
+  .step > .step-body{ padding:14px; display:none; }
+  .step.open > .step-body{ display:block; }
+  .step > .step-head .chev{ transition:transform 0.2s; }
+  .step.open > .step-head .chev{ transform:rotate(90deg); }
+
+  .learncard{ background:var(--green-bg); border-left:5px solid var(--green); border-radius:8px; padding:10px 12px; margin-bottom:10px; }
+  .learncard h4{ margin:0 0 6px; color:var(--green); }
+
+  .reject{ background:var(--red-bg); border-left:5px solid var(--red); border-radius:8px; padding:8px 12px; margin:8px 0; font-size:0.95em; }
+  .reject strong{ color:var(--red); }
+
+  .tip{ background:var(--amber-bg); border-left:5px solid var(--amber); border-radius:8px; padding:8px 12px; margin:8px 0; font-size:0.95em; }
+  .tip strong{ color:var(--amber); }
+
+  .recap{ background:var(--blue-bg); border-left:5px solid var(--blue); border-radius:8px; padding:8px 12px; margin:8px 0; font-size:0.95em; }
+  .recap strong{ color:var(--blue); }
+
+  .htier{ background:#f2eaf7; border:2px solid #6b3fa0; border-radius:10px; padding:0; margin:14px 0; overflow:hidden; }
+  .htier .htier-label{ background:#6b3fa0; color:#fff; font-weight:bold; padding:6px 12px; font-size:0.85em; letter-spacing:0.5px; }
+  .htier .htier-body{ padding:12px; }
+  .htier h4{ margin:0 0 6px; color:#6b3fa0; }
+
+  .q{ border:1px solid var(--border); border-radius:10px; padding:12px; margin-bottom:12px; background:#fffdf7; }
+  .q p.prompt{ font-weight:bold; margin-top:0; }
+  .options label{ display:block; padding:8px 10px; margin:4px 0; border:1px solid var(--border); border-radius:8px; cursor:pointer; background:#fff; }
+  .options label:hover{ background:#f3ecd6; }
+  .options label.correct{ background: var(--green-bg); border-color:var(--green); }
+  .options label.incorrect{ background: var(--red-bg); border-color:var(--red); opacity:0.7; }
+  .options label input{ margin-right:8px; }
+
+  input[type=text].blank{ font-family:inherit; font-size:1em; border:none; border-bottom:2px solid var(--teal); background:transparent; width:140px; padding:2px 4px; }
+  input[type=text].blank:focus{ outline:none; border-bottom-color:var(--amber); }
+
+  button.check{ background: var(--teal); color:#fff; border:none; border-radius:8px; padding:8px 16px; font-family:inherit; cursor:pointer; margin-top:6px; }
+  button.check:hover{ background:var(--teal-dark); }
+  button.hint{ background:#fff; border:1px solid var(--amber); color:var(--amber); border-radius:8px; padding:6px 10px; font-family:inherit; cursor:pointer; margin:4px 6px 0 0; font-size:0.9em; }
+  button.hint:hover{ background: var(--amber-bg); }
+
+  .feedback{ margin-top:8px; padding:8px 10px; border-radius:8px; display:none; font-size:0.95em; }
+  .feedback.show{ display:block; }
+  .feedback.good{ background: var(--green-bg); color: var(--green); }
+  .feedback.try{ background: var(--red-bg); color: var(--red); }
+
+  .hintbox{ display:none; background:#fff; border:1px dashed var(--amber); border-radius:8px; padding:8px 10px; margin-top:6px; font-size:0.9em; }
+  .hintbox.show{ display:block; }
+
+  textarea.longans{ width:100%; min-height:90px; font-family:inherit; font-size:1em; border:1px solid var(--border); border-radius:8px; padding:8px; }
+  .reveal-btn{ background: var(--amber); color:#fff; border:none; border-radius:8px; padding:8px 14px; font-family:inherit; cursor:pointer; margin-top:8px; }
+  .modelans{ display:none; background: var(--green-bg); border-left:5px solid var(--green); border-radius:8px; padding:10px; margin-top:8px; }
+  .modelans.show{ display:block; }
+
+  a{ color: var(--teal-dark); }
+  ul.linklist li{ margin-bottom:6px; }
+
+  .jumpnav{ display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px; }
+  .jumpnav button{ background:#fff; border:1px solid var(--teal); color:var(--teal-dark); border-radius:20px; padding:6px 12px; font-family:inherit; font-size:0.85em; cursor:pointer; }
+  .jumpnav button:hover{ background: var(--teal); color:#fff; }
+
+  svg.rategraph{ max-width:100%; height:auto; background:#fff; border:1px solid var(--border); border-radius:8px; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <h1>Year 10 Fundamental Chemistry</h1>
+  <p>Revision and pre-lesson support. Work through each step at your own pace</p>
+</header>
+
+<nav class="tabs" id="topicTabs">
+  <button class="active" onclick="showTopic('rates')">Rates of Reaction &amp; Equilibrium</button>
+  <button onclick="showTopic('energy')">Energy Changes</button>
+  <button onclick="showTopic('bonding')">Structure &amp; Bonding</button>
+  <button onclick="showTopic('metals')">Metals</button>
+  <button onclick="showTopic('extraction')">Extraction of Metals</button>
+</nav>
+
+<main>
+
+<!-- =================== TOPIC: RATES OF REACTION & EQUILIBRIUM =================== -->
+<section class="topic active" id="topic-rates">
+
+  <div class="jumpnav">
+    <button onclick="openStep('r-warm')">Warm-up</button>
+    <button onclick="openStep('r-learn')">Learn</button>
+    <button onclick="openStep('r-mcq')">Quick Check</button>
+    <button onclick="openStep('r-fill')">Fill the Blanks</button>
+    <button onclick="openStep('r-exam')">Exam-Style</button>
+    <button onclick="openStep('r-extended')">Extended Answer</button>
+    <button onclick="openStep('r-recap')">Recap &amp; Connect</button>
+  </div>
+
+  <!-- Revision advice panel -->
+  <div class="panel" id="panel-advice">
+    <button class="panel-head" onclick="togglePanel('panel-advice')">How to revise this topic, and why it works <span class="chev">▶</span></button>
+    <div class="panel-body">
+      <p><strong>Action 1: little and often.</strong> Spend 20 to 30 minutes on this page a week, in short bursts rather than one long sitting. Work through Warm-up first every time. If you can't answer those, that's telling you exactly what to revise.</p>
+      <p><strong>Action 2: test yourself, don't just read.</strong> Look, cover, write, check the key words below, then try the exam-style questions without looking at your notes first. Getting things wrong here is useful, since it shows you what to fix before the real assessment.</p>
+      <p>Made the same mistake twice? Check your notes are correct first, then bring it to your chemistry teacher or an intervention session.</p>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-help">
+    <button class="panel-head" onclick="togglePanel('panel-help')">Stuck, absent, or missed this lesson? <span class="chev">▶</span></button>
+    <div class="panel-body">
+      <p>Everything from this topic (video reviews, PowerPoints and worksheets) is on <strong>Oak National Academy</strong>: go to Curriculum, choose <em>KS4 Science (Combined FT)</em>, then find the Chemistry section for "The Rate and Extent of Chemical Change."</p>
+      <ul class="linklist">
+        <li><a href="https://continuityoak.org.uk/Lessons?r=4279" target="_blank">Rates of reaction: Review Part 1</a></li>
+        <li><a href="https://continuityoak.org.uk/Lessons?r=4285" target="_blank">Rates of reaction: Review Part 2</a></li>
+        <li><a href="https://continuityoak.org.uk/Lessons?r=4282" target="_blank">Reversible reactions &amp; equilibrium (1)</a></li>
+        <li><a href="https://continuityoak.org.uk/Lessons?r=4283" target="_blank">Reversible reactions &amp; equilibrium (2)</a></li>
+        <li><a href="https://continuityoak.org.uk/Lessons?r=4286" target="_blank">Reversible reactions &amp; equilibrium (3)</a></li>
+        <li><a href="https://continuityoak.org.uk/Lessons?r=4284" target="_blank">Reversible reactions &amp; equilibrium (4)</a></li>
+      </ul>
+      <p>Checklists before assessments, homework booklets and more revision links are in your <strong>Year 10 chemistry Showbie area</strong>. If you're not sure which lesson to watch, reach out to your chemistry teacher for help and support.</p>
+    </div>
+  </div>
+
+  <!-- STEP 1: WARM UP -->
+  <div class="step open" id="r-warm">
+    <button class="step-head" onclick="toggleStep('r-warm')">Step 1: Warm-up <span class="chev">▶</span></button>
+    <div class="step-body">
+      <p>Quick recall. No score recorded, this is just to see what's fresh and what needs a look back.</p>
+
+      <div class="q">
+        <p class="prompt">Last lesson: What is the general word for particles bumping into each other with enough energy to react?</p>
+        <input type="text" class="blank" id="w1" placeholder="type your answer">
+        <button class="check" onclick="checkWarm('w1','feedback-w1',['successful collision','successful collisions'])">Check</button>
+        <button class="hint" id="reveal-w1" style="display:none;" onclick="revealWarm('w1','successful collision')">📋 Show answer</button>
+        <div class="feedback" id="feedback-w1"></div>
+      </div>
+
+      <div class="q">
+        <p class="prompt">Last week: Name one state of matter where particles are close together but can still move past each other.</p>
+        <input type="text" class="blank" id="w2" placeholder="type your answer">
+        <button class="check" onclick="checkWarm('w2','feedback-w2',['liquid'])">Check</button>
+        <button class="hint" id="reveal-w2" style="display:none;" onclick="revealWarm('w2','liquid')">📋 Show answer</button>
+        <div class="feedback" id="feedback-w2"></div>
+      </div>
+
+      <div class="recap"><strong>Last month (Year 9 recap):</strong> In Year 9 you learned that chlorine is added to drinking water. Can you remember why? (Answer further down in Recap &amp; Connect.)</div>
+
+      <p style="font-size:0.9em; color:#666;">Couldn't answer these? That's your diagnostic. These are the ideas to revise first before moving on.</p>
+    </div>
+  </div>
+
+  <!-- STEP 2: LEARN -->
+  <div class="step" id="r-learn">
+    <button class="step-head" onclick="toggleStep('r-learn')">Step 2: Learn <span class="chev">▶</span></button>
+    <div class="step-body">
+
+      <div class="learncard">
+        <h4>Collision theory</h4>
+        <p>For a reaction to happen, particles must <strong>collide</strong> with each other with enough energy. This minimum energy is called the <strong>activation energy</strong>. Anything that increases how often particles collide, or how much energy those collisions have, speeds up the reaction.</p>
+      </div>
+
+      <div class="learncard">
+        <h4>The four factors that change rate of reaction</h4>
+        <p><strong>Temperature ↑</strong> → particles move faster (more kinetic energy) → more frequent collisions, and more of them have enough energy to react → faster rate.</p>
+        <p><strong>Concentration ↑</strong> (of a dissolved reactant) → more particles in the same volume → more frequent collisions → faster rate.</p>
+        <p><strong>Surface area ↑</strong> (smaller pieces of a solid) → more particles exposed and available to react → more frequent collisions → faster rate.</p>
+        <p><strong>Catalyst</strong> → provides an alternative pathway with a <strong>lower activation energy</strong>, without being used up itself → faster rate.</p>
+      </div>
+
+      <div class="tip"><strong>Examiner tip:</strong> Always finish the explanation with "…so more frequent collisions" or "…so more frequent successful collisions." A lot of marks are lost because students stop at "particles move faster" without linking it back to collisions.</div>
+
+      <div class="learncard">
+        <h4>Measuring rate of reaction</h4>
+        <p>You can measure how fast a reaction happens by tracking, at regular time intervals:</p>
+        <p>• <strong>Volume of gas produced</strong> (using a gas syringe), good for reactions that make a gas, e.g. acid + metal, acid + carbonate.</p>
+        <p>• <strong>Change in mass</strong>, since the mass of the flask decreases as gas escapes.</p>
+        <p>• <strong>Time for a solution to turn cloudy/opaque</strong>, used for reactions that produce a precipitate, e.g. sodium thiosulfate + hydrochloric acid.</p>
+        <p><strong>Mean rate of reaction</strong> = amount of product formed (or reactant used up) ÷ time taken.</p>
+      </div>
+
+      <div class="reject"><strong>Don't write this:</strong> "The mass of the flask increased" for the thiosulfate/acid reaction. It <strong>decreases</strong>, because a gas (sulfur dioxide) is made and escapes into the air. The atoms aren't lost, they've just left the container.</div>
+
+      <div class="learncard">
+        <h4>Reversible reactions &amp; equilibrium</h4>
+        <p>In a <strong>reversible reaction</strong>, the products can react again to re-form the original reactants, shown with a ⇌ symbol. If a reversible reaction happens in a <strong>closed system</strong> (nothing can escape or be added), it eventually reaches <strong>equilibrium</strong>. The forward and backward reactions are still happening, but at the same rate, so the amounts of reactants and products stop changing.</p>
+        <p>Changing the conditions (temperature, pressure, or concentration) can shift the position of equilibrium, favouring either the forward or backward reaction. At this stage, you mainly need to recognise that the reaction can go both ways, and that equilibrium means "no further overall change."</p>
+      </div>
+
+      <div class="htier">
+        <div class="htier-label">HIGHER TIER</div>
+        <div class="htier-body">
+          <h4>Le Chatelier's principle: how conditions shift equilibrium</h4>
+          <p>If a system at equilibrium is disturbed, the position of equilibrium shifts to <strong>counteract</strong> the change:</p>
+          <p>• <strong>Temperature ↑</strong> shifts equilibrium in the <strong>endothermic</strong> direction (to absorb the extra energy). Temperature ↓ shifts it in the <strong>exothermic</strong> direction.</p>
+          <p>• <strong>Pressure ↑</strong> (gas reactions) shifts equilibrium towards the side with <strong>fewer gas molecules</strong>.</p>
+          <p>• A <strong>catalyst</strong> does <em>not</em> change the position of equilibrium. It speeds up the forward and reverse reactions equally, so equilibrium is reached faster but the amounts of reactants/products at equilibrium stay the same.</p>
+          <p>• Removing a product shifts equilibrium <strong>towards</strong> that side, to replace what's been removed.</p>
+          <div class="tip"><strong>Worked example (Haber process):</strong> N₂(g) + 3H₂(g) ⇌ 2NH₃(g), forward reaction exothermic. Increasing temperature shifts equilibrium left (endothermic direction), so the <strong>yield of ammonia decreases</strong>. Removing ammonia shifts equilibrium right, so <strong>more ammonia is made to replace what's lost</strong>.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STEP 3: MCQ -->
+  <div class="step" id="r-mcq">
+    <button class="step-head" onclick="toggleStep('r-mcq')">Step 3: Quick Check (Multiple Choice) <span class="chev">▶</span></button>
+    <div class="step-body">
+
+      <div class="q" id="mcq1">
+        <p class="prompt">1. Which of these will NOT increase the rate of a reaction between a solid and a solution?</p>
+        <div class="options">
+          <label><input type="radio" name="mcq1" onclick="answerMCQ('mcq1',this,false)"> Increasing the temperature</label>
+          <label><input type="radio" name="mcq1" onclick="answerMCQ('mcq1',this,false)"> Cutting the solid into smaller pieces</label>
+          <label><input type="radio" name="mcq1" onclick="answerMCQ('mcq1',this,true)"> Using a bigger flask</label>
+          <label><input type="radio" name="mcq1" onclick="answerMCQ('mcq1',this,false)"> Increasing the concentration of the solution</label>
+        </div>
+        <div class="feedback" id="fb-mcq1"></div>
+      </div>
+
+      <div class="q" id="mcq2">
+        <p class="prompt">2. A catalyst speeds up a reaction because it:</p>
+        <div class="options">
+          <label><input type="radio" name="mcq2" onclick="answerMCQ('mcq2',this,false)"> Increases the temperature of the reactants</label>
+          <label><input type="radio" name="mcq2" onclick="answerMCQ('mcq2',this,true)"> Provides a pathway with a lower activation energy</label>
+          <label><input type="radio" name="mcq2" onclick="answerMCQ('mcq2',this,false)"> Increases the concentration of reactants</label>
+          <label><input type="radio" name="mcq2" onclick="answerMCQ('mcq2',this,false)"> Gets used up during the reaction</label>
+        </div>
+        <div class="feedback" id="fb-mcq2"></div>
+      </div>
+
+      <div class="q" id="mcq3">
+        <p class="prompt">3. In a reaction where gas is produced, which apparatus directly measures the volume of gas made?</p>
+        <div class="options">
+          <label><input type="radio" name="mcq3" onclick="answerMCQ('mcq3',this,false)"> Balance</label>
+          <label><input type="radio" name="mcq3" onclick="answerMCQ('mcq3',this,true)"> Gas syringe</label>
+          <label><input type="radio" name="mcq3" onclick="answerMCQ('mcq3',this,false)"> Thermometer</label>
+          <label><input type="radio" name="mcq3" onclick="answerMCQ('mcq3',this,false)"> Stopwatch</label>
+        </div>
+        <div class="feedback" id="fb-mcq3"></div>
+      </div>
+
+      <div class="q" id="mcq4">
+        <p class="prompt">4. At equilibrium in a closed system:</p>
+        <div class="options">
+          <label><input type="radio" name="mcq4" onclick="answerMCQ('mcq4',this,false)"> The forward and backward reactions have both stopped</label>
+          <label><input type="radio" name="mcq4" onclick="answerMCQ('mcq4',this,true)"> The forward and backward reactions are still happening, at the same rate</label>
+          <label><input type="radio" name="mcq4" onclick="answerMCQ('mcq4',this,false)"> Only the forward reaction is happening</label>
+          <label><input type="radio" name="mcq4" onclick="answerMCQ('mcq4',this,false)"> All the reactants have turned into products</label>
+        </div>
+        <div class="feedback" id="fb-mcq4"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STEP 4: FILL THE BLANKS -->
+  <div class="step" id="r-fill">
+    <button class="step-head" onclick="toggleStep('r-fill')">Step 4: Fill the Blanks <span class="chev">▶</span></button>
+    <div class="step-body">
+
+      <p><strong>Group A: Collision theory (word bank: collisions, activation, kinetic, catalyst)</strong></p>
+      <div class="q" id="fillA">
+        <p>Increasing temperature gives particles more <input type="text" class="blank fA" data-ans="kinetic"> energy, so they move faster and have more frequent <input type="text" class="blank fA" data-ans="collisions">. The minimum energy needed for a reaction to happen is called the <input type="text" class="blank fA" data-ans="activation"> energy. A <input type="text" class="blank fA" data-ans="catalyst"> speeds up a reaction without being used up.</p>
+        <button class="check" onclick="checkGroup('fA','fbA',4)">Check answers</button>
+        <div class="feedback" id="fbA"></div>
+      </div>
+
+      <p><strong>Group B: Measuring rate (no word bank this time)</strong></p>
+      <div class="q" id="fillB">
+        <p>Mean rate of reaction is calculated using amount of product formed <input type="text" class="blank fB" data-ans="divided"> by time taken. A gas syringe measures the <input type="text" class="blank fB" data-ans="volume"> of gas produced. When a gas escapes during a reaction, the total <input type="text" class="blank fB" data-ans="mass"> of the flask and contents decreases.</p>
+        <button class="check" onclick="checkGroup('fB','fbB',3)">Check answers</button>
+        <div class="feedback" id="fbB"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STEP 5: EXAM STYLE -->
+  <div class="step" id="r-exam">
+    <button class="step-head" onclick="toggleStep('r-exam')">Step 5: Exam-Style Questions <span class="chev">▶</span></button>
+    <div class="step-body">
+
+      <div class="q">
+        <p class="prompt">1. A student says increasing temperature can increase the rate of reaction. Explain how. Your answer should link to collision theory. <em>(2 marks)</em></p>
+        <textarea class="longans" id="ex1"></textarea>
+        <br>
+        <button class="hint" onclick="toggleHint('h1a')">🧠 Hint</button>
+        <button class="hint" onclick="toggleHint('h1b')">📋 Bigger hint</button>
+        <button class="reveal-btn" onclick="toggleModel('m1')">✅ Reveal model answer</button>
+        <div class="hintbox" id="h1a">Think about what happens to the particles' energy when you heat something up.</div>
+        <div class="hintbox" id="h1b">Your answer needs: (1) what happens to particle energy/speed, (2) what that does to collisions, and ideally a mention of activation energy.</div>
+        <div class="modelans" id="m1">
+          <strong>Model answer:</strong> Increasing temperature increases the kinetic energy of the particles, so they move faster. This means there are more frequent collisions between particles, and more of those collisions have enough energy to overcome the activation energy, so the rate of reaction increases.
+          <div class="tip"><strong>Examiner tip:</strong> A really strong answer explicitly mentions activation energy. That's often the difference between 1 and 2 marks.</div>
+        </div>
+      </div>
+
+      <div class="q">
+        <p class="prompt">2. A student says increasing concentration can increase the rate of reaction. Explain how. Your answer should link to collision theory. <em>(2 marks)</em></p>
+        <textarea class="longans" id="ex2"></textarea>
+        <br>
+        <button class="reveal-btn" onclick="toggleModel('m2')">✅ Reveal model answer</button>
+        <div class="modelans" id="m2">
+          <strong>Model answer:</strong> Increasing the concentration of one or both reactants means there are more reactant particles in a given volume, so there are more frequent collisions between them, increasing the rate of reaction.
+        </div>
+      </div>
+
+      <div class="q">
+        <p class="prompt">3. Apart from altering the temperature, suggest <strong>two</strong> ways the reaction of calcium carbonate with hydrochloric acid could be sped up. <em>(2 marks)</em></p>
+        <textarea class="longans" id="ex3"></textarea>
+        <br>
+        <button class="reveal-btn" onclick="toggleModel('m3')">✅ Reveal model answer</button>
+        <div class="modelans" id="m3">
+          <strong>Accepted answers (any two):</strong> Increase the concentration of the acid; increase the surface area of the solid (smaller pieces / powder); add a catalyst.
+        </div>
+      </div>
+
+      <div class="q">
+        <p class="prompt">4. In an experiment, the mass of a conical flask and its contents was greater at the start of a reaction than at the end. Explain why. <em>(2 marks)</em></p>
+        <textarea class="longans" id="ex4"></textarea>
+        <br>
+        <button class="reveal-btn" onclick="toggleModel('m4')">✅ Reveal model answer</button>
+        <div class="modelans" id="m4">
+          <strong>Model answer:</strong> A gas (e.g. sulfur dioxide) was formed during the reaction, which escaped from the open flask into the air. This is why the mass measured decreased.
+          <div class="reject"><strong>Don't write this:</strong> "Mass was lost" or "atoms disappeared." No atoms are lost or destroyed, they simply leave the container as a gas.</div>
+        </div>
+      </div>
+
+      <div class="q">
+        <p class="prompt">5. A gas syringe is used to collect the gas from a reaction, and its measurements are taken every 30 seconds until the reaction stops. What type of variable is <strong>time</strong> in this investigation? <em>(1 mark)</em></p>
+        <div class="options">
+          <label><input type="radio" name="ex5" onclick="answerMCQ('ex5',this,false)"> Control variable</label>
+          <label><input type="radio" name="ex5" onclick="answerMCQ('ex5',this,true)"> Dependent variable</label>
+          <label><input type="radio" name="ex5" onclick="answerMCQ('ex5',this,false)"> Independent variable</label>
+        </div>
+        <div class="feedback" id="fb-ex5"></div>
+        <div class="tip"><strong>Watch out:</strong> Time is usually the <strong>independent</strong> variable you set in an experiment. Here, though, time is what you're measuring the reaction's progress against as the outcome, so check carefully what the question is actually asking each time you see this style of question.</div>
+      </div>
+
+      <div class="q">
+        <p class="prompt">6. Describe how you could investigate the effect of acid concentration on the rate of reaction between hydrochloric acid and magnesium, and how you would make it a fair test. You do not need to write about safety precautions. <em>(4–6 marks)</em></p>
+        <textarea class="longans" id="ex6" style="min-height:130px;"></textarea>
+        <br>
+        <button class="reveal-btn" onclick="toggleModel('m6')">✅ Reveal model answer</button>
+        <div class="modelans" id="m6">
+          <strong>Model answer:</strong>
+          <ul>
+            <li>Measure a fixed volume of hydrochloric acid using a measuring cylinder and add it to a conical flask.</li>
+            <li>Add a weighed piece of magnesium and quickly attach a bung fitted to a gas syringe.</li>
+            <li>Start a stopwatch immediately.</li>
+            <li>Measure the volume of gas collected at regular time intervals (e.g. every 30 seconds) until the reaction finishes.</li>
+            <li>Repeat with different concentrations of acid.</li>
+          </ul>
+          <strong>To make it a fair test:</strong> use the same volume of acid, the same starting temperature, and the same mass/length of magnesium each time. Only the concentration of acid should change.
+        </div>
+      </div>
+
+      <div class="q">
+        <p class="prompt">7. Some students investigated the effect of temperature on rate of reaction using sodium thiosulfate and hydrochloric acid. Their method contained several errors and does <strong>not</strong> produce accurate results:</p>
+        <ol>
+          <li>Use a beaker to measure 50 cm³ of heated sodium thiosulfate solution into a conical flask.</li>
+          <li>Measure the temperature of the room.</li>
+          <li>Put the conical flask on a black cross drawn on a piece of paper.</li>
+          <li>Start a timer.</li>
+          <li>Use the same beaker to measure 10 cm³ of hydrochloric acid into the conical flask.</li>
+          <li>Stop the timer when the cross is no longer visible.</li>
+        </ol>
+        <p class="prompt">Describe a method the students should use to produce accurate results. You do not need to write about safety precautions. <em>(6 marks)</em></p>
+        <textarea class="longans" id="ex7" style="min-height:130px;"></textarea>
+        <br>
+        <button class="hint" onclick="toggleHint('h7')">🧠 Hint</button>
+        <div class="hintbox" id="h7">Go through the method line by line. What's wrong with using a beaker, measuring the room instead of the solution, starting the timer too early, and re-using the same beaker?</div>
+        <button class="reveal-btn" onclick="toggleModel('m7')">✅ Reveal model answer</button>
+        <div class="modelans" id="m7">
+          <strong>Model answer:</strong>
+          <ul>
+            <li>Use a measuring cylinder (not a beaker) to measure 50 cm³ of sodium thiosulfate.</li>
+            <li>Use a <em>different</em> measuring cylinder to measure 10 cm³ of hydrochloric acid.</li>
+            <li>Record the temperature of the <em>solution</em> (not the room) after the acid is added, and again at the end of the reaction. Average the two to get the reaction temperature.</li>
+            <li>Start the timer when the acid is added, and stop it when the cross is no longer visible. This is the dependent variable.</li>
+            <li>Repeat the experiment at different temperatures (e.g. by warming the reactants in a water bath). This is the independent variable.</li>
+            <li>Use the same concentration and overall volume of both solutions each time. These are the control variables.</li>
+          </ul>
+          <div class="tip"><strong>Examiner tip:</strong> Questions like this are marking whether you can spot the <em>specific</em> flaw in a method, not whether you can describe a perfect method from scratch. Go through line by line.</div>
+        </div>
+      </div>
+
+      <div class="q">
+        <p class="prompt">8. In an investigation, the volume of sodium hydroxide solution added is a variable. Which <strong>two</strong> words describe this type of variable? <em>(2 marks)</em></p>
+        <div class="options">
+          <label><input type="checkbox" onclick="toggleCheck(this)"> Categoric</label>
+          <label><input type="checkbox" onclick="toggleCheck(this)"> Continuous</label>
+          <label><input type="checkbox" onclick="toggleCheck(this)"> Control</label>
+          <label><input type="checkbox" onclick="toggleCheck(this)"> Dependent</label>
+          <label><input type="checkbox" onclick="toggleCheck(this)"> Independent</label>
+        </div>
+        <button class="check" onclick="checkTwo(this,['Continuous','Independent'])">Check answers</button>
+        <div class="feedback" id="fb-ex8"></div>
+        <div class="tip"><strong>Examiner tip:</strong> A variable can be described by more than one word at once. Here, the volume is something you deliberately change (independent) <em>and</em> it can take any numerical value (continuous), not just fixed categories.</div>
+      </div>
+
+      <div class="q">
+        <p class="prompt">9. A student's results show an anomalous (unexpected) point on their graph. Suggest one error in the method that could cause this. <em>(1 mark)</em></p>
+        <textarea class="longans" id="ex9"></textarea>
+        <br>
+        <button class="reveal-btn" onclick="toggleModel('m9')">✅ Reveal model answer</button>
+        <div class="modelans" id="m9">
+          <strong>Accepted answers:</strong> The temperature was measured too soon; or the mixture was not stirred enough.
+          <div class="reject"><strong>Don't write this. None of these are accepted:</strong> "carelessness," "poor technique," "human error" (too vague), "they didn't add enough," "read the thermometer wrong." You must describe an error in the <em>method itself</em>. Imagine saying "even if I did it correctly, the method still has this weakness."</div>
+        </div>
+      </div>
+
+      <div class="q">
+        <p class="prompt">10. Water reacts with anhydrous copper sulfate in a reversible reaction: water + anhydrous copper sulfate ⇌ hydrated copper sulfate. What colour is anhydrous copper sulfate, and what colour does it turn once hydrated? <em>(2 marks)</em></p>
+        <div class="options">
+          <label><input type="radio" name="ex10" onclick="answerMCQ('ex10',this,false)"> Blue → white</label>
+          <label><input type="radio" name="ex10" onclick="answerMCQ('ex10',this,true)"> White → blue</label>
+          <label><input type="radio" name="ex10" onclick="answerMCQ('ex10',this,false)"> Colourless → green</label>
+        </div>
+        <div class="feedback" id="fb-ex10"></div>
+        <div class="tip"><strong>Examiner tip:</strong> The colour change of anhydrous (white) to hydrated (blue) copper sulfate is a standard test used to show that water is present in a substance.</div>
+      </div>
+
+      <div class="htier">
+        <div class="htier-label">HIGHER TIER</div>
+        <div class="htier-body">
+          <h4>11. Calculating rate from a graph using a tangent</h4>
+          <p class="prompt">A graph shows loss of mass (g) against time (mins) for a reaction, with a curved decreasing line. Calculate the mean rate of reaction between 1 minute and 3 minutes, given that the loss of mass was 0.19 g at 1 minute and 0.34 g at 3 minutes. <em>(2 marks)</em></p>
+          <textarea class="longans" id="ht1"></textarea>
+          <br>
+          <button class="reveal-btn" onclick="toggleModel('mht1')">✅ Reveal model answer</button>
+          <div class="modelans" id="mht1">
+            Change in mass = 0.34 − 0.19 = 0.15 g. Change in time = 3 − 1 = 2 minutes.<br>
+            Mean rate of reaction = 0.15 ÷ 2 = <strong>0.075 g/min</strong>
+            <div class="tip"><strong>Method:</strong> draw a tangent to the curve at each point of interest, then calculate the gradient between them using change in y ÷ change in x.</div>
+          </div>
+
+          <h4 style="margin-top:16px;">12. Haber process equilibrium (Le Chatelier)</h4>
+          <p class="prompt">Ammonia is produced by the reaction: N₂(g) + 3H₂(g) ⇌ 2NH₃(g). The forward reaction is exothermic.</p>
+          <p class="prompt">(a) Explain the effect of increasing temperature on the yield of ammonia at equilibrium. <em>(2 marks)</em></p>
+          <textarea class="longans" id="ht2a"></textarea>
+          <br>
+          <button class="reveal-btn" onclick="toggleModel('mht2a')">✅ Reveal model answer</button>
+          <div class="modelans" id="mht2a">The equilibrium shifts to the left, in the endothermic direction. The yield of ammonia will decrease.</div>
+
+          <p class="prompt" style="margin-top:10px;">(b) Ammonia is removed from the reaction mixture as it forms. Explain the effect on the position of equilibrium. <em>(2 marks)</em></p>
+          <textarea class="longans" id="ht2b"></textarea>
+          <br>
+          <button class="reveal-btn" onclick="toggleModel('mht2b')">✅ Reveal model answer</button>
+          <div class="modelans" id="mht2b">The equilibrium shifts to the right, so that more ammonia will be made to replace what is lost.</div>
+
+          <p class="prompt" style="margin-top:10px;">(c) What is the effect of a catalyst on the equilibrium position? <em>(2 marks)</em></p>
+          <textarea class="longans" id="ht2c"></textarea>
+          <br>
+          <button class="reveal-btn" onclick="toggleModel('mht2c')">✅ Reveal model answer</button>
+          <div class="modelans" id="mht2c">The equilibrium position stays the same. A catalyst increases the rate of the forward and reverse reactions by the same amount, so equilibrium is reached faster but the yield is unchanged.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STEP 6: EXTENDED ANSWER -->
+  <div class="step" id="r-extended">
+    <button class="step-head" onclick="toggleStep('r-extended')">Step 6: Extended Answer <span class="chev">▶</span></button>
+    <div class="step-body">
+      <div class="q">
+        <p class="prompt">Explain, as fully as you can, why the rate of a reaction decreases over time during a single experiment. Give your answer in terms of particles.</p>
+        <textarea class="longans" id="extA" style="min-height:110px;"></textarea>
+        <br>
+        <button class="reveal-btn" onclick="toggleModel('mA')">✅ Reveal model answer &amp; what a strong answer includes</button>
+        <div class="modelans" id="mA">
+          <strong>Model answer:</strong> As the reaction proceeds, reactant particles are used up, so their concentration decreases. This means there are fewer particles in a given volume, so collisions become less frequent, and the rate of reaction decreases.
+          <p><strong>A strong answer includes:</strong> (1) reactants are used up / concentration decreases, (2) fewer particles per volume, (3) less frequent collisions.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 7: RECAP & CONNECT -->
+  <div class="step" id="r-recap">
+    <button class="step-head" onclick="toggleStep('r-recap')">Step 7: Recap &amp; Connect (Year 9 link) <span class="chev">▶</span></button>
+    <div class="step-body">
+      <div class="recap"><strong>Connecting back to Year 9: Water &amp; Resources:</strong> You met chlorine in Year 9 when learning how drinking water is made safe. This topic uses the same chemical again.</div>
+
+      <div class="q">
+        <p class="prompt">(a) How does chlorine make water safe to drink? <em>(1 mark)</em></p>
+        <textarea class="longans" id="rc1"></textarea>
+        <br>
+        <button class="reveal-btn" onclick="toggleModel('mrc1')">✅ Reveal answer</button>
+        <div class="modelans" id="mrc1">Chlorine kills bacteria / sterilises the water.</div>
+      </div>
+
+      <div class="q">
+        <p class="prompt">(b) The amount of chlorine in swimming pool water should be carefully monitored and controlled. Explain why. <em>(2 marks)</em></p>
+        <textarea class="longans" id="rc2"></textarea>
+        <br>
+        <button class="reveal-btn" onclick="toggleModel('mrc2')">✅ Reveal answer</button>
+        <div class="modelans" id="mrc2">Too much chlorine is toxic/poisonous and could irritate skin or eyes. Too little chlorine will not kill the bacteria in the water.</div>
+      </div>
+
+      <div class="recap"><strong>Connecting back to Year 9: Atomic Structure:</strong> What order were the electron, proton and neutron discovered in?</div>
+      <div class="q" id="rc3">
+        <p class="prompt">(c) Tick one box. <em>(1 mark)</em></p>
+        <div class="options">
+          <label><input type="radio" name="rc3" onclick="answerMCQ('rc3',this,true)"> electron → proton → neutron</label>
+          <label><input type="radio" name="rc3" onclick="answerMCQ('rc3',this,false)"> electron → neutron → proton</label>
+          <label><input type="radio" name="rc3" onclick="answerMCQ('rc3',this,false)"> neutron → proton → electron</label>
+          <label><input type="radio" name="rc3" onclick="answerMCQ('rc3',this,false)"> proton → electron → neutron</label>
+        </div>
+        <div class="feedback" id="fb-rc3"></div>
+      </div>
+
+      <div class="recap"><strong>Connecting back to Year 9: Quantitative Chemistry:</strong> Chlorine has two isotopes. Use this to recalculate a relative atomic mass, just like you did in Year 9 with potassium and gold.</div>
+      <div class="q">
+        <p class="prompt">(d) Chlorine's isotopes: ³⁵Cl has 75.77% abundance, ³⁷Cl has 24.23% abundance. Calculate the relative atomic mass (Aᵣ) of chlorine to 2 decimal places. <em>(3 marks)</em></p>
+        <textarea class="longans" id="rc4"></textarea>
+        <br>
+        <button class="reveal-btn" onclick="toggleModel('mrc4')">✅ Reveal model answer</button>
+        <div class="modelans" id="mrc4">
+          Aᵣ = [(35 × 75.77) + (37 × 24.23)] ÷ 100 = 35.484 → <strong>Aᵣ = 35.48</strong> (2 d.p.)
+          <div class="tip"><strong>Remember:</strong> multiply each isotope's mass number by its percentage abundance, add the totals together, then divide by 100.</div>
+        </div>
+      </div>
+
+      <div class="recap"><strong>Connecting back to Year 9: Chemical Analysis:</strong> Chromatography and Rf values haven't gone away either.</div>
+      <div class="q">
+        <p class="prompt">(e) What is the other phase in chromatography, alongside the mobile phase? <em>(1 mark)</em></p>
+        <div class="options">
+          <label><input type="radio" name="rc5" onclick="answerMCQ('rc5',this,false)"> Moving phase</label>
+          <label><input type="radio" name="rc5" onclick="answerMCQ('rc5',this,false)"> Recycled phase</label>
+          <label><input type="radio" name="rc5" onclick="answerMCQ('rc5',this,true)"> Stationary phase</label>
+          <label><input type="radio" name="rc5" onclick="answerMCQ('rc5',this,false)"> Viscous phase</label>
+        </div>
+        <div class="feedback" id="fb-rc5"></div>
+      </div>
+      <div class="q">
+        <p class="prompt">(f) In a chromatography experiment, a blue colour moved 4.77 cm and the solvent moved 5.30 cm. Calculate the Rf value. <em>(2 marks)</em></p>
+        <textarea class="longans" id="rc6"></textarea>
+        <br>
+        <button class="reveal-btn" onclick="toggleModel('mrc6')">✅ Reveal model answer</button>
+        <div class="modelans" id="mrc6">Rf = distance travelled by substance ÷ distance travelled by solvent = 4.77 ÷ 5.30 = <strong>0.9</strong></div>
+      </div>
+
+      <p style="font-size:0.9em; color:#666;">This is exactly why spaced recap matters. The same core Year 9 chemistry keeps reappearing in new contexts throughout Year 10 and Year 11.</p>
+    </div>
+  </div>
+
+  <!-- REVISE THIS TOPIC -->
+  <div class="panel" id="panel-revise">
+    <button class="panel-head" onclick="togglePanel('panel-revise')">Revise this topic: ready-made resources <span class="chev">▶</span></button>
+    <div class="panel-body">
+      <p><strong>Knowledge Organiser:</strong> <a href="https://mrhussain-chem.github.io/Y10-Knowledge-Organiser/" target="_blank">Year 10 Knowledge Organiser</a>, one-page summaries for every Year 10 topic.</p>
+      <p><strong>Quiz:</strong> <a href="https://mrhussain-chem.github.io/Y10-Chem-Quiz/" target="_blank">Year 10 Summary Quiz</a>, extra self-marking practice.</p>
+      <p><strong>Physics &amp; Maths Tutor (PMT):</strong></p>
+      <ul class="linklist">
+        <li><a href="https://www.physicsandmathstutor.com/pdfpages/?pdf=https%3A%2F%2Fpmt.physicsandmathstutor.com%2Fdownload%2FChemistry%2FGCSE%2FNotes%2FAQA%2F6-The-Rateand-Extent-of-Chemical-Change%2FDefinitions%2520-%2520Topic%25206%2520The%2520Rate%2520and%2520Extent%2520of%2520Chemical%2520Changes%2520-%2520AQA%2520Chemistry%2520GCSE.pdf" target="_blank">Key definitions: The Rate and Extent of Chemical Change</a></li>
+        <li><a href="https://www.physicsandmathstutor.com/chemistry-revision/gcse-aqa/rate-and-extent-of-chemical-change/flashcards/" target="_blank">Flashcards</a></li>
+        <li><a href="https://www.physicsandmathstutor.com/pdfpages/?pdf=https%3A%2F%2Fpmt.physicsandmathstutor.com%2Fdownload%2FChemistry%2FGCSE%2FNotes%2FAQA%2F6-The-Rateand-Extent-of-Chemical-Change%2FSummary%2F6.1.%2520Rate%2520of%2520reaction.pdf" target="_blank">Summary notes: Rate of reaction</a></li>
+        <li><a href="https://www.physicsandmathstutor.com/pdfpages/?pdf=https%3A%2F%2Fpmt.physicsandmathstutor.com%2Fdownload%2FChemistry%2FGCSE%2FNotes%2FAQA%2F6-The-Rateand-Extent-of-ChemicalChange%2FSummary%2F6.2.%2520Reversible%2520reactions%2520and%2520dynamic%2520equilibrium.pdf" target="_blank">Summary notes: Reversible reactions &amp; dynamic equilibrium</a></li>
+        <li><em>Want more practice?</em> Try these <a href="https://www.physicsandmathstutor.com/pdfpages/?pdf=https%3A%2F%2Fpmt.physicsandmathstutor.com%2Fdownload%2FChemistry%2FGCSE%2FTopic-Qs%2FAQA%2F6-TheRate-and-Extent-of-Chemical-Change%2FSetB%2F6.1%2520Rate%2520of%2520Reaction%2520QP.pdf" target="_blank">past paper questions</a> and <a href="https://www.physicsandmathstutor.com/pdfpages/?pdf=https%3A%2F%2Fpmt.physicsandmathstutor.com%2Fdownload%2FChemistry%2FGCSE%2FTopic-Qs%2FAQA%2F6-TheRate-and-Extent-of-Chemical-Change%2FSetB%2F6.1%2520Rate%2520of%2520Reaction%2520MS.pdf" target="_blank">mark scheme</a></li>
+      </ul>
+      <p>Missed the lesson? Video reviews are in the "Stuck, absent, or missed this lesson?" box above.</p>
+    </div>
+  </div>
+
+</section>
+
+<!-- placeholder future topics -->
+<section class="topic" id="topic-energy">
+
+  <div class="jumpnav">
+    <button onclick="openStep('e-warm')">Warm-up</button>
+    <button onclick="openStep('e-learn')">Learn</button>
+    <button onclick="openStep('e-mcq')">Quick Check</button>
+    <button onclick="openStep('e-fill')">Fill the Blanks</button>
+    <button onclick="openStep('e-exam')">Exam-Style</button>
+    <button onclick="openStep('e-extended')">Extended Answer</button>
+  </div>
+
+  <div class="panel" id="panel-advice-e">
+    <button class="panel-head" onclick="togglePanel('panel-advice-e')">How to revise this topic, and why it works <span class="chev">▶</span></button>
+    <div class="panel-body">
+      <p>Energy changes questions often ask you to <strong>draw and label a diagram</strong> as well as write definitions. Practise sketching a reaction profile from memory, not just reading one.</p>
+      <p>Made the same mistake twice? Check your notes are correct first, then bring it to your chemistry teacher or an intervention session.</p>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-help-e">
+    <button class="panel-head" onclick="togglePanel('panel-help-e')">Stuck, absent, or missed this lesson? <span class="chev">▶</span></button>
+    <div class="panel-body">
+      <ul class="linklist">
+        <li><a href="https://continuityoak.org.uk/Lessons?r=1789" target="_blank">Energy changes: Review</a></li>
+      </ul>
+      <p>Checklists before assessments, homework booklets and more revision links are in your <strong>Year 10 chemistry Showbie area</strong>. If you're not sure which lesson to watch, reach out to your chemistry teacher for help and support.</p>
+    </div>
+  </div>
+
+  <!-- STEP 1: WARM UP -->
+  <div class="step open" id="e-warm">
+    <button class="step-head" onclick="toggleStep('e-warm')">Step 1: Warm-up <span class="chev">▶</span></button>
+    <div class="step-body">
+      <p>Quick recall. No score recorded.</p>
+      <div class="q">
+        <p class="prompt">Last lesson: What is the minimum amount of energy needed for a reaction to happen called?</p>
+        <input type="text" class="blank" id="ew1" placeholder="type your answer">
+        <button class="check" onclick="checkWarm('ew1','feedback-ew1',['activation energy'])">Check</button>
+        <button class="hint" id="reveal-ew1" style="display:none;" onclick="revealWarm('ew1','activation energy')">📋 Show answer</button>
+        <div class="feedback" id="feedback-ew1"></div>
+      </div>
+      <div class="recap"><strong>Last month (Year 9 recap):</strong> Combustion (burning fuels) releases energy. Can you remember one pollutant gas released when fossil fuels burn?</div>
+      <p style="font-size:0.9em; color:#666;">Couldn't answer these? That's your diagnostic. These are the ideas to revise first before moving on.</p>
+    </div>
+  </div>
+
+  <!-- STEP 2: LEARN -->
+  <div class="step" id="e-learn">
+    <button class="step-head" onclick="toggleStep('e-learn')">Step 2: Learn <span class="chev">▶</span></button>
+    <div class="step-body">
+
+      <div class="learncard">
+        <h4>Exothermic and endothermic reactions</h4>
+        <p>An <strong>exothermic</strong> reaction releases energy to the surroundings, so the temperature of the surroundings <strong>increases</strong>. Examples: combustion, neutralisation, most oxidation reactions.</p>
+        <p>An <strong>endothermic</strong> reaction takes in energy from the surroundings, so the temperature of the surroundings <strong>decreases</strong>. Examples: thermal decomposition, dissolving some salts.</p>
+      </div>
+
+      <div class="reject"><strong>Don't write this:</strong> "heat is given off". Examiners prefer <strong>"energy is released to the surroundings."</strong> If you use the word "transferred," you must say <em>transferred to the surroundings</em>, since on its own "transferred" isn't specific enough. Stick to the word <strong>energy</strong> rather than "heat."</div>
+
+      <div class="learncard">
+        <h4>Reaction profiles</h4>
+        <p>A reaction profile is a diagram showing how energy changes during a reaction. It shows:</p>
+        <p>• The energy level of the <strong>reactants</strong> and of the <strong>products</strong></p>
+        <p>• The <strong>activation energy</strong>: the "hump" that must be overcome for the reaction to start</p>
+        <p>• The <strong>overall energy change</strong>: the difference between reactants' and products' energy levels</p>
+        <p>In an <strong>exothermic</strong> reaction profile, the products end up at a <em>lower</em> energy than the reactants (energy has been released). In an <strong>endothermic</strong> reaction profile, the products end up at a <em>higher</em> energy than the reactants (energy has been absorbed).</p>
+      </div>
+
+      <svg class="rategraph" viewBox="0 0 420 220" xmlns="http://www.w3.org/2000/svg">
+        <line x1="40" y1="190" x2="400" y2="190" stroke="#2b2b2b" stroke-width="2"/>
+        <line x1="40" y1="190" x2="40" y2="20" stroke="#2b2b2b" stroke-width="2"/>
+        <text x="10" y="15" font-size="12" fill="#2b2b2b">Energy</text>
+        <text x="330" y="210" font-size="12" fill="#2b2b2b">Progress of reaction</text>
+        <path d="M70,140 C120,140 150,50 190,50 C230,50 260,175 310,175" fill="none" stroke="#2f6f6b" stroke-width="3"/>
+        <line x1="70" y1="140" x2="130" y2="140" stroke="#2f6f6b" stroke-width="3"/>
+        <line x1="250" y1="175" x2="330" y2="175" stroke="#2f6f6b" stroke-width="3"/>
+        <text x="55" y="132" font-size="11" fill="#2f6f6b">Reactants</text>
+        <text x="290" y="192" font-size="11" fill="#2f6f6b">Products</text>
+        <line x1="190" y1="50" x2="190" y2="140" stroke="#b8860b" stroke-dasharray="3,3"/>
+        <text x="196" y="95" font-size="11" fill="#b8860b">Activation energy</text>
+        <line x1="330" y1="140" x2="330" y2="175" stroke="#a4322a" stroke-dasharray="3,3"/>
+        <text x="336" y="160" font-size="11" fill="#a4322a">Overall energy change</text>
+      </svg>
+      <p style="font-size:0.85em; color:#666;">This example shows an <strong>exothermic</strong> reaction profile. Notice the products end lower than the reactants.</p>
+
+      <div class="htier">
+        <div class="htier-label">HIGHER TIER</div>
+        <div class="htier-body">
+          <h4>Calculating energy change using bond energies</h4>
+          <p>Every chemical bond stores a certain amount of energy (its <strong>bond energy</strong>, in kJ/mol). During a reaction:</p>
+          <p>• <strong>Breaking</strong> bonds in the reactants requires energy (endothermic): total = sum of bond energies broken.</p>
+          <p>• <strong>Forming</strong> new bonds in the products releases energy (exothermic): total = sum of bond energies formed.</p>
+          <p><strong>Overall energy change = energy needed to break bonds − energy released forming bonds.</strong> A negative answer means the reaction is exothermic overall; a positive answer means it's endothermic overall.</p>
+          <div class="tip"><strong>Worked example:</strong> Combustion of methane, CH₄ + 2O₂ → CO₂ + 2H₂O. Bond energies: C–H = 413, O=O = 498, C=O = 805, O–H = 464 kJ/mol.<br>
+          Bonds broken: 4×(C–H) + 2×(O=O) = 4×413 + 2×498 = 1652 + 996 = 2648 kJ/mol.<br>
+          Bonds formed: 2×(C=O) + 4×(O–H) = 2×805 + 4×464 = 1610 + 1856 = 3466 kJ/mol.<br>
+          Overall energy change = 2648 − 3466 = <strong>−818 kJ/mol</strong> (exothermic, as expected for combustion).</div>
+        </div>
+      </div>
+
+      <div class="learncard">
+        <h4>Required practical: Temperature changes (neutralisation)</h4>
+        <p>This required practical investigates the energy change when an acid is neutralised by an alkali.</p>
+        <p><strong>Method outline:</strong> Measure a fixed volume of dilute hydrochloric acid into an insulated cup (e.g. a polystyrene cup inside a beaker, for stability and to reduce heat loss). Record the starting temperature. Add small, measured volumes of sodium hydroxide solution one at a time, stirring gently and recording the highest temperature reached after each addition. Repeat the whole experiment to get a mean temperature for each volume added.</p>
+        <p><strong>Analysing the results:</strong> Plot temperature against volume of alkali added. The temperature rises as neutralisation releases energy (exothermic), reaches a maximum at the point of exact neutralisation, then falls as further alkali added simply dilutes and cools the mixture.</p>
+        <div class="tip"><strong>Examiner tip:</strong> An insulated cup and a lid with a hole for the thermometer both reduce energy loss to the surroundings. Mentioning *why* a control step matters, not just naming it, picks up extra marks.</div>
+      </div>
+
+      <svg class="rategraph" viewBox="0 0 420 220" xmlns="http://www.w3.org/2000/svg">
+        <line x1="40" y1="190" x2="400" y2="190" stroke="#2b2b2b" stroke-width="2"/>
+        <line x1="40" y1="190" x2="40" y2="20" stroke="#2b2b2b" stroke-width="2"/>
+        <text x="8" y="15" font-size="12" fill="#2b2b2b">Max temp (°C)</text>
+        <text x="270" y="210" font-size="12" fill="#2b2b2b">Volume of alkali added (cm³)</text>
+        <path d="M60,160 L150,60 L340,150" fill="none" stroke="#2f6f6b" stroke-width="3"/>
+        <circle cx="150" cy="60" r="4" fill="#a4322a"/>
+        <text x="120" y="45" font-size="11" fill="#a4322a">Peak = exact neutralisation</text>
+      </svg>
+
+    </div>
+  </div>
+
+  <!-- STEP 3: MCQ -->
+  <div class="step" id="e-mcq">
+    <button class="step-head" onclick="toggleStep('e-mcq')">Step 3: Quick Check (Multiple Choice) <span class="chev">▶</span></button>
+    <div class="step-body">
+
+      <div class="q" id="emcq1">
+        <p class="prompt">1. Which of these is an example of an exothermic reaction?</p>
+        <div class="options">
+          <label><input type="radio" name="emcq1" onclick="answerMCQ('emcq1',this,true)"> Combustion (burning)</label>
+          <label><input type="radio" name="emcq1" onclick="answerMCQ('emcq1',this,false)"> Thermal decomposition</label>
+          <label><input type="radio" name="emcq1" onclick="answerMCQ('emcq1',this,false)"> Dissolving certain salts in water</label>
+        </div>
+        <div class="feedback" id="fb-emcq1"></div>
+      </div>
+
+      <div class="q" id="emcq2">
+        <p class="prompt">2. In an endothermic reaction, the temperature of the surroundings:</p>
+        <div class="options">
+          <label><input type="radio" name="emcq2" onclick="answerMCQ('emcq2',this,false)"> Increases</label>
+          <label><input type="radio" name="emcq2" onclick="answerMCQ('emcq2',this,true)"> Decreases</label>
+          <label><input type="radio" name="emcq2" onclick="answerMCQ('emcq2',this,false)"> Stays exactly the same</label>
+        </div>
+        <div class="feedback" id="fb-emcq2"></div>
+      </div>
+
+      <div class="q" id="emcq3">
+        <p class="prompt">3. On a reaction profile, the "hump" above the reactants' energy level represents:</p>
+        <div class="options">
+          <label><input type="radio" name="emcq3" onclick="answerMCQ('emcq3',this,false)"> The overall energy change</label>
+          <label><input type="radio" name="emcq3" onclick="answerMCQ('emcq3',this,true)"> The activation energy</label>
+          <label><input type="radio" name="emcq3" onclick="answerMCQ('emcq3',this,false)"> The energy of the products</label>
+        </div>
+        <div class="feedback" id="fb-emcq3"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STEP 4: FILL THE BLANKS -->
+  <div class="step" id="e-fill">
+    <button class="step-head" onclick="toggleStep('e-fill')">Step 4: Fill the Blanks <span class="chev">▶</span></button>
+    <div class="step-body">
+      <p><strong>Word bank: exothermic, endothermic, activation, surroundings</strong></p>
+      <div class="q" id="efillA">
+        <p>A reaction that releases energy to the <input type="text" class="blank efA" data-ans="surroundings"> is called <input type="text" class="blank efA" data-ans="exothermic">. A reaction that takes in energy is called <input type="text" class="blank efA" data-ans="endothermic">. The minimum energy needed for a reaction to start is the <input type="text" class="blank efA" data-ans="activation"> energy.</p>
+        <button class="check" onclick="checkGroup('efA','efbA',4)">Check answers</button>
+        <div class="feedback" id="efbA"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 5: EXAM STYLE -->
+  <div class="step" id="e-exam">
+    <button class="step-head" onclick="toggleStep('e-exam')">Step 5: Exam-Style Questions <span class="chev">▶</span></button>
+    <div class="step-body">
+
+      <div class="q">
+        <p class="prompt">1. The reaction between carbon and oxygen is exothermic. What does "exothermic reaction" mean? <em>(1 mark)</em></p>
+        <textarea class="longans" id="eex1"></textarea>
+        <br>
+        <button class="reveal-btn" onclick="toggleModel('em1')">✅ Reveal model answer</button>
+        <div class="modelans" id="em1">
+          <strong>Model answer:</strong> A reaction that releases more energy to the surroundings than it absorbs.
+          <div class="tip"><strong>Examiner tip:</strong> "Released" is a stronger word than "given off." If you use "transferred," you must say <em>transferred to the surroundings</em>.</div>
+        </div>
+      </div>
+
+      <div class="q">
+        <p class="prompt">2. Draw a reaction profile for an exothermic reaction. You should label: the energy level of the reactants and of the products, the activation energy, and the overall energy change. <em>(4 marks)</em></p>
+        <p style="font-size:0.9em; color:#666;">(Sketch this one on paper, then check it against the diagram in Step 2: Learn.)</p>
+        <div class="tip"><strong>Examiner tip:</strong> Watch your arrow heads. Activation energy and overall energy change should both be shown as a two-headed or clearly directional arrow spanning the correct energy gap, not just a label.</div>
+      </div>
+
+      <div class="q">
+        <p class="prompt">3. Water reacts with anhydrous copper sulfate in a reversible reaction to form hydrated copper sulfate. This reaction is exothermic. When water is added to anhydrous copper sulfate, what happens to the temperature? <em>(1 mark)</em></p>
+        <div class="options">
+          <label><input type="radio" name="eex3" onclick="answerMCQ('eex3',this,false)"> Decreases</label>
+          <label><input type="radio" name="eex3" onclick="answerMCQ('eex3',this,true)"> Increases</label>
+          <label><input type="radio" name="eex3" onclick="answerMCQ('eex3',this,false)"> Stays the same</label>
+        </div>
+        <div class="feedback" id="fb-eex3"></div>
+      </div>
+
+      <div class="q">
+        <p class="prompt">4. A student heats 1.26 g of hydrated copper sulfate until the mass is constant at 0.81 g of white anhydrous copper sulfate. Calculate the mass of water driven off. <em>(1 mark)</em></p>
+        <textarea class="longans" id="eex4"></textarea>
+        <br>
+        <button class="reveal-btn" onclick="toggleModel('em4')">✅ Reveal model answer</button>
+        <div class="modelans" id="em4">Mass of water = 1.26 − 0.81 = <strong>0.45 g</strong> (conservation of mass: nothing is lost, it just leaves as water vapour).</div>
+      </div>
+
+      <div class="q">
+        <p class="prompt">5. Required practical write-up: A student wants to find out how the temperature changes when hydrochloric acid is neutralised by sodium hydroxide solution. Describe a method the student could use to get valid, repeatable results. <em>(6 marks)</em></p>
+        <textarea class="longans" id="eexRP" style="min-height:130px;"></textarea>
+        <br>
+        <button class="reveal-btn" onclick="toggleModel('emRP')">✅ Reveal model answer</button>
+        <div class="modelans" id="emRP">
+          <strong>Model answer:</strong>
+          <ul>
+            <li>Use a measuring cylinder to add a fixed volume of dilute hydrochloric acid to an insulated cup, stood inside a beaker for stability.</li>
+            <li>Measure and record the starting temperature of the acid.</li>
+            <li>Add a fixed small volume of sodium hydroxide solution, stir, and record the highest temperature reached.</li>
+            <li>Repeat, adding the same volume of sodium hydroxide each time, until well past the point where temperature stops rising.</li>
+            <li>Repeat the whole experiment again and calculate a mean temperature for each volume added.</li>
+            <li>Plot a graph of temperature against volume of sodium hydroxide added to identify the point of maximum temperature (exact neutralisation).</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="htier">
+        <div class="htier-label">HIGHER TIER</div>
+        <div class="htier-body">
+          <h4>5. Bond energy calculation</h4>
+          <p class="prompt">Calculate the overall energy change for the complete combustion of one mole of methane in oxygen: CH₄ + 2O₂ → CO₂ + 2H₂O. Bond energies: C–H = 413, O=O = 498, C=O = 805, O–H = 464 kJ/mol. <em>(3 marks)</em></p>
+          <textarea class="longans" id="ht3" style="min-height:110px;"></textarea>
+          <br>
+          <button class="hint" onclick="toggleHint('ht3h')">🧠 Hint</button>
+          <div class="hintbox" id="ht3h">Count the bonds carefully: CH₄ has 4 C–H bonds; 2O₂ has 2 O=O bonds; CO₂ has 2 C=O bonds; 2H₂O has 4 O–H bonds.</div>
+          <button class="reveal-btn" onclick="toggleModel('mht3')">✅ Reveal model answer</button>
+          <div class="modelans" id="mht3">
+            Energy to break bonds: (4×413) + (2×498) = 1652 + 996 = 2648 kJ/mol.<br>
+            Energy released forming bonds: (2×805) + (4×464) = 1610 + 1856 = 3466 kJ/mol.<br>
+            Overall energy change = 2648 − 3466 = <strong>−818 kJ/mol</strong>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STEP 6: EXTENDED ANSWER -->
+  <div class="step" id="e-extended">
+    <button class="step-head" onclick="toggleStep('e-extended')">Step 6: Extended Answer <span class="chev">▶</span></button>
+    <div class="step-body">
+      <div class="q">
+        <p class="prompt">Explain the difference between an exothermic and an endothermic reaction, giving one everyday example of each.</p>
+        <textarea class="longans" id="eextA" style="min-height:110px;"></textarea>
+        <br>
+        <button class="reveal-btn" onclick="toggleModel('emA')">✅ Reveal model answer &amp; what a strong answer includes</button>
+        <div class="modelans" id="emA">
+          <strong>Model answer:</strong> An exothermic reaction releases energy to the surroundings, so the surrounding temperature increases, for example combustion (burning). An endothermic reaction takes in energy from the surroundings, so the surrounding temperature decreases, for example thermal decomposition.
+          <p><strong>A strong answer includes:</strong> (1) correct direction of energy transfer for each type, (2) the effect on surrounding temperature, (3) one correctly matched real example for each.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REVISE THIS TOPIC -->
+  <div class="panel" id="panel-revise-e">
+    <button class="panel-head" onclick="togglePanel('panel-revise-e')">Revise this topic: ready-made resources <span class="chev">▶</span></button>
+    <div class="panel-body">
+      <p><strong>Knowledge Organiser:</strong> <a href="https://mrhussain-chem.github.io/Y10-Knowledge-Organiser/" target="_blank">Year 10 Knowledge Organiser</a></p>
+      <p><strong>Quiz:</strong> <a href="https://mrhussain-chem.github.io/Y10-Chem-Quiz/" target="_blank">Year 10 Summary Quiz</a></p>
+      <p><strong>Physics &amp; Maths Tutor (PMT):</strong></p>
+      <ul class="linklist">
+        <li><a href="https://www.physicsandmathstutor.com/pdfpages/?pdf=https%3A%2F%2Fpmt.physicsandmathstutor.com%2Fdownload%2FChemistry%2FGCSE%2FNotes%2FAQA%2F5-EnergyChanges%2FSummary%2F5.1.%2520Exothermic%2520and%2520endothermic%2520reactions.pdf" target="_blank">Summary notes: Exothermic &amp; endothermic reactions</a></li>
+        <li><em>Want more practice?</em> Try these <a href="https://www.physicsandmathstutor.com/pdfpages/?pdf=https%3A%2F%2Fpmt.physicsandmathstutor.com%2Fdownload%2FChemistry%2FGCSE%2FTopic-Qs%2FAQA%2F5-EnergyChanges%2FSetB%2F5.1%2520Exothermic%2520%26%2520Endothermic%2520Reactions%2520QP.pdf" target="_blank">past paper questions</a> and <a href="https://www.physicsandmathstutor.com/pdfpages/?pdf=https%3A%2F%2Fpmt.physicsandmathstutor.com%2Fdownload%2FChemistry%2FGCSE%2FTopic-Qs%2FAQA%2F5-EnergyChanges%2FSetB%2F5.1%2520Exothermic%2520%26%2520Endothermic%2520Reactions%2520MS.pdf" target="_blank">mark scheme</a></li>
+      </ul>
+      <p>Missed the lesson? Video reviews are in the "Stuck, absent, or missed this lesson?" box above.</p>
+    </div>
+  </div>
+
+</section>
+<section class="topic" id="topic-bonding">
+
+  <div class="jumpnav">
+    <button onclick="openStep('b-warm')">Warm-up</button>
+    <button onclick="openStep('b-learn')">Learn</button>
+    <button onclick="openStep('b-mcq')">Quick Check</button>
+    <button onclick="openStep('b-fill')">Fill the Blanks</button>
+    <button onclick="openStep('b-exam')">Exam-Style</button>
+    <button onclick="openStep('b-extended')">Extended Answer</button>
+    <button onclick="openStep('b-recap')">Recap &amp; Connect</button>
+  </div>
+
+  <div class="panel" id="panel-advice-b">
+    <button class="panel-head" onclick="togglePanel('panel-advice-b')">How to revise this topic, and why it works <span class="chev">▶</span></button>
+    <div class="panel-body">
+      <p>This topic builds directly on the ionic bonding you learned in Year 9. If dot-and-cross diagrams felt shaky back then, that's the first thing to revisit before tackling covalent bonding here.</p>
+      <p>Made the same mistake twice? Check your notes are correct first, then bring it to your chemistry teacher or an intervention session.</p>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-help-b">
+    <button class="panel-head" onclick="togglePanel('panel-help-b')">Stuck, absent, or missed this lesson? <span class="chev">▶</span></button>
+    <div class="panel-body">
+      <ul class="linklist">
+        <li><a href="https://continuityoak.org.uk/Lessons?r=491" target="_blank">Structure and bonding: Solids, liquids and gases</a></li>
+        <li><a href="https://continuityoak.org.uk/Lessons?r=484" target="_blank">Structure and bonding: Review</a></li>
+      </ul>
+      <p>Checklists before assessments, homework booklets and more revision links are in your <strong>Year 10 chemistry Showbie area</strong>. If you're not sure which lesson to watch, reach out to your chemistry teacher for help and support.</p>
+    </div>
+  </div>
+
+  <!-- STEP 1: WARM UP -->
+  <div class="step open" id="b-warm">
+    <button class="step-head" onclick="toggleStep('b-warm')">Step 1: Warm-up <span class="chev">▶</span></button>
+    <div class="step-body">
+      <p>Quick recall. No score recorded.</p>
+      <div class="q">
+        <p class="prompt">Last year (Y9): Ionic bonds form between a metal and a non-metal. What happens to electrons when an ionic bond forms?</p>
+        <input type="text" class="blank" id="bw1" placeholder="type your answer">
+        <button class="check" onclick="checkWarm('bw1','feedback-bw1',['electrons are transferred','transferred'])">Check</button>
+        <button class="hint" id="reveal-bw1" style="display:none;" onclick="revealWarm('bw1','electrons are transferred')">📋 Show answer</button>
+        <div class="feedback" id="feedback-bw1"></div>
+      </div>
+      <div class="recap"><strong>Last year (Y9 recap):</strong> Sodium chloride is an example of an ionic compound. Can you remember what a giant ionic lattice looks like?</div>
+      <p style="font-size:0.9em; color:#666;">Couldn't answer these? That's your diagnostic. These are the ideas to revise first before moving on.</p>
+    </div>
+  </div>
+
+  <!-- STEP 2: LEARN -->
+  <div class="step" id="b-learn">
+    <button class="step-head" onclick="toggleStep('b-learn')">Step 2: Learn <span class="chev">▶</span></button>
+    <div class="step-body">
+
+      <div class="learncard">
+        <h4>Recap: ionic bonding (from Year 9)</h4>
+        <p>Ionic bonds form between a <strong>metal and a non-metal</strong>. Electrons are <strong>transferred</strong> from the metal atom to the non-metal atom, forming oppositely charged ions that are strongly attracted to each other. Millions of ions arrange into a <strong>giant ionic lattice</strong>.</p>
+      </div>
+
+      <div class="learncard">
+        <h4>Covalent bonding (new for Year 10)</h4>
+        <p>Covalent bonds form between <strong>two non-metals</strong>. Instead of transferring electrons, the atoms <strong>share a pair of electrons</strong>, one from each atom, so both atoms get a fuller outer shell. Covalent bonds are very strong.</p>
+        <p>Simple examples: H₂, Cl₂, H₂O, CH₄, and O₂ (a double covalent bond).</p>
+      </div>
+
+      <svg class="rategraph" viewBox="0 0 420 160" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="140" cy="80" r="45" fill="none" stroke="#2f6f6b" stroke-width="2"/>
+        <circle cx="220" cy="80" r="45" fill="none" stroke="#2f6f6b" stroke-width="2"/>
+        <text x="90" y="30" font-size="12" fill="#2b2b2b">H</text>
+        <text x="255" y="30" font-size="12" fill="#2b2b2b">H</text>
+        <text x="165" y="20" font-size="11" fill="#666">shared pair (covalent bond)</text>
+        <circle cx="172" cy="70" r="3" fill="#a4322a"/>
+        <circle cx="172" cy="90" r="3" fill="#a4322a"/>
+        <circle cx="188" cy="70" r="3" fill="#2d5f8a"/>
+        <circle cx="188" cy="90" r="3" fill="#2d5f8a"/>
+      </svg>
+      <p style="font-size:0.85em; color:#666; text-align:center;">Dot-and-cross diagram of a hydrogen molecule (H₂): one shared pair of electrons, one from each atom.</p>
+
+      <div class="learncard">
+        <h4>Properties linked to structure</h4>
+        <p><strong>Ionic compounds (giant lattice):</strong> high melting and boiling points (strong electrostatic forces of attraction act throughout the whole giant lattice, and lots of energy is needed to overcome them). Conduct electricity when molten or dissolved in water (ions are free to move and carry charge), but <strong>not</strong> when solid (ions are fixed in place).</p>
+        <p><strong>Simple covalent molecules</strong> (e.g. H₂O, CO₂): low melting and boiling points, and don't conduct electricity (no overall electric charge, and no free electrons or ions).</p>
+      </div>
+
+      <div class="reject"><strong>Don't write this:</strong> "Simple covalent substances have low melting points because the covalent bonds are weak." This is one of the most common mark-scheme traps. <strong>The covalent bonds themselves are strong</strong>. It's the <strong>weak forces of attraction between different molecules</strong> (intermolecular forces) that need only a little energy to overcome. Always specify "the forces <em>between molecules</em>," not "the covalent bonds."</div>
+
+      <div class="learncard">
+        <h4>Giant covalent structures</h4>
+        <p><strong>Diamond:</strong> each carbon atom forms four strong covalent bonds in a rigid 3D lattice. Very hard, very high melting point, doesn't conduct electricity (no free electrons or ions).</p>
+        <p><strong>Graphite:</strong> each carbon atom forms three covalent bonds, arranged in layers. High melting point. The layers have no covalent bonds between them, so they can slide over each other, and graphite is soft and slippery. Each carbon has one spare (delocalised) electron, which is free to move, so unlike diamond, <strong>graphite conducts electricity</strong>.</p>
+      </div>
+
+      <div class="htier">
+        <div class="htier-label">HIGHER TIER</div>
+        <div class="htier-body">
+          <h4>Graphene and fullerenes</h4>
+          <p><strong>Graphene</strong> is a single layer of graphite, one atom thick: a sheet of carbon atoms each bonded to three others in hexagons. It's strong, light, and conducts electricity (delocalised electrons), making it useful in electronics and composite materials.</p>
+          <p><strong>Fullerenes</strong> are molecules of carbon atoms arranged as hollow shapes: tubes, spheres (like buckminsterfullerene, C₆₀), or other cages. Fullerenes can be used to deliver drugs into the body, as lubricants, and as catalysts. Carbon nanotubes are extremely strong and used to strengthen materials, and can conduct electricity due to delocalised electrons.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STEP 3: MCQ -->
+  <div class="step" id="b-mcq">
+    <button class="step-head" onclick="toggleStep('b-mcq')">Step 3: Quick Check (Multiple Choice) <span class="chev">▶</span></button>
+    <div class="step-body">
+
+      <div class="q" id="bmcq1">
+        <p class="prompt">1. A covalent bond forms between:</p>
+        <div class="options">
+          <label><input type="radio" name="bmcq1" onclick="answerMCQ('bmcq1',this,false)"> A metal and a non-metal</label>
+          <label><input type="radio" name="bmcq1" onclick="answerMCQ('bmcq1',this,true)"> Two non-metals</label>
+          <label><input type="radio" name="bmcq1" onclick="answerMCQ('bmcq1',this,false)"> Two metals</label>
+        </div>
+        <div class="feedback" id="fb-bmcq1"></div>
+      </div>
+
+      <div class="q" id="bmcq2">
+        <p class="prompt">2. Why do simple covalent substances have low melting points?</p>
+        <div class="options">
+          <label><input type="radio" name="bmcq2" onclick="answerMCQ('bmcq2',this,false)"> The covalent bonds within molecules are weak</label>
+          <label><input type="radio" name="bmcq2" onclick="answerMCQ('bmcq2',this,true)"> The forces of attraction between molecules are weak</label>
+          <label><input type="radio" name="bmcq2" onclick="answerMCQ('bmcq2',this,false)"> They have no electrons</label>
+        </div>
+        <div class="feedback" id="fb-bmcq2"></div>
+      </div>
+
+      <div class="q" id="bmcq3">
+        <p class="prompt">3. Why does graphite conduct electricity but diamond does not?</p>
+        <div class="options">
+          <label><input type="radio" name="bmcq3" onclick="answerMCQ('bmcq3',this,false)"> Graphite contains metal atoms</label>
+          <label><input type="radio" name="bmcq3" onclick="answerMCQ('bmcq3',this,true)"> Graphite has delocalised electrons that are free to move; diamond doesn't</label>
+          <label><input type="radio" name="bmcq3" onclick="answerMCQ('bmcq3',this,false)"> Graphite is a liquid at room temperature</label>
+        </div>
+        <div class="feedback" id="fb-bmcq3"></div>
+      </div>
+
+      <div class="q" id="bmcq4">
+        <p class="prompt">4. An ionic compound conducts electricity when:</p>
+        <div class="options">
+          <label><input type="radio" name="bmcq4" onclick="answerMCQ('bmcq4',this,false)"> It is solid</label>
+          <label><input type="radio" name="bmcq4" onclick="answerMCQ('bmcq4',this,true)"> It is molten or dissolved in water</label>
+          <label><input type="radio" name="bmcq4" onclick="answerMCQ('bmcq4',this,false)"> Never</label>
+        </div>
+        <div class="feedback" id="fb-bmcq4"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STEP 4: FILL THE BLANKS -->
+  <div class="step" id="b-fill">
+    <button class="step-head" onclick="toggleStep('b-fill')">Step 4: Fill the Blanks <span class="chev">▶</span></button>
+    <div class="step-body">
+      <p><strong>Word bank: transferred, shared, delocalised, lattice</strong></p>
+      <div class="q" id="bfillA">
+        <p>In ionic bonding, electrons are <input type="text" class="blank bfA" data-ans="transferred"> from a metal atom to a non-metal atom, forming a giant ionic <input type="text" class="blank bfA" data-ans="lattice">. In covalent bonding, a pair of electrons is <input type="text" class="blank bfA" data-ans="shared"> between two non-metal atoms. Graphite conducts electricity because each carbon has one <input type="text" class="blank bfA" data-ans="delocalised"> electron that is free to move.</p>
+        <button class="check" onclick="checkGroup('bfA','bfbA',4)">Check answers</button>
+        <div class="feedback" id="bfbA"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 5: EXAM STYLE -->
+  <div class="step" id="b-exam">
+    <button class="step-head" onclick="toggleStep('b-exam')">Step 5: Exam-Style Questions <span class="chev">▶</span></button>
+    <div class="step-body">
+
+      <div class="q">
+        <p class="prompt">1. Explain why simple covalent substances such as water have low melting and boiling points. <em>(2 marks)</em></p>
+        <textarea class="longans" id="bex1"></textarea>
+        <br>
+        <button class="reveal-btn" onclick="toggleModel('bm1')">✅ Reveal model answer</button>
+        <div class="modelans" id="bm1">
+          <strong>Model answer:</strong> Simple covalent substances are made of individual molecules, held together by weak forces of attraction between molecules. Only a small amount of energy is needed to overcome these forces, so melting and boiling points are low.
+          <div class="reject"><strong>Don't write this:</strong> "The covalent bonds are weak." The covalent bonds inside each molecule are strong. It's the forces <em>between</em> molecules that are weak.</div>
+        </div>
+      </div>
+
+      <div class="q">
+        <p class="prompt">2. Explain why an ionic compound conducts electricity when molten but not when solid. <em>(2 marks)</em></p>
+        <textarea class="longans" id="bex2"></textarea>
+        <br>
+        <button class="reveal-btn" onclick="toggleModel('bm2')">✅ Reveal model answer</button>
+        <div class="modelans" id="bm2">
+          <strong>Model answer:</strong> When molten, the ions are free to move and can carry an electric charge. When solid, the ions are held in fixed positions in the lattice and cannot move, so no charge can flow.
+        </div>
+      </div>
+
+      <div class="q">
+        <p class="prompt">3. Diamond and graphite are both made only of carbon atoms, but diamond is very hard while graphite is soft and slippery. Explain this difference in terms of their structures. <em>(3 marks)</em></p>
+        <textarea class="longans" id="bex3" style="min-height:100px;"></textarea>
+        <br>
+        <button class="hint" onclick="toggleHint('bh3')">🧠 Hint</button>
+        <div class="hintbox" id="bh3">Think about how many bonds each carbon atom makes in each structure, and whether there are bonds between layers in graphite.</div>
+        <button class="reveal-btn" onclick="toggleModel('bm3')">✅ Reveal model answer</button>
+        <div class="modelans" id="bm3">
+          <strong>Model answer:</strong> In diamond, each carbon atom forms four strong covalent bonds in a rigid 3D structure, making it very hard. In graphite, each carbon atom forms only three covalent bonds, arranged in layers with no covalent bonds between the layers, so the layers can slide over each other, making graphite soft and slippery.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STEP 6: EXTENDED ANSWER -->
+  <div class="step" id="b-extended">
+    <button class="step-head" onclick="toggleStep('b-extended')">Step 6: Extended Answer <span class="chev">▶</span></button>
+    <div class="step-body">
+      <div class="q">
+        <p class="prompt">Compare ionic bonding and covalent bonding, including how each type of bonding forms and one property of a substance held together by each.</p>
+        <textarea class="longans" id="bextA" style="min-height:110px;"></textarea>
+        <br>
+        <button class="reveal-btn" onclick="toggleModel('bmA')">✅ Reveal model answer &amp; what a strong answer includes</button>
+        <div class="modelans" id="bmA">
+          <strong>Model answer:</strong> Ionic bonding forms between a metal and a non-metal, where electrons are transferred to form oppositely charged ions held together in a giant lattice. Ionic compounds have high melting points. Covalent bonding forms between two non-metals, where atoms share pairs of electrons. Simple covalent substances have low melting points because of weak forces between molecules.
+          <p><strong>A strong answer includes:</strong> (1) correct atoms involved in each type, (2) transferred vs shared electrons, (3) one correctly linked property for each.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 7: RECAP & CONNECT -->
+  <div class="step" id="b-recap">
+    <button class="step-head" onclick="toggleStep('b-recap')">Step 7: Recap &amp; Connect (Year 9 link) <span class="chev">▶</span></button>
+    <div class="step-body">
+      <div class="recap"><strong>Connecting back to Year 9: Atomic Structure &amp; Ionic Bonding:</strong> Sodium chloride (NaCl) is formed by ionic bonding. You drew its dot-and-cross diagram in Year 9.</div>
+      <div class="q">
+        <p class="prompt">(a) When sodium reacts with chlorine to form sodium chloride, what happens to the electron in sodium's outermost shell? <em>(2 marks)</em></p>
+        <textarea class="longans" id="brc1"></textarea>
+        <br>
+        <button class="reveal-btn" onclick="toggleModel('mbrc1')">✅ Reveal answer</button>
+        <div class="modelans" id="mbrc1">The outermost electron from sodium is transferred to chlorine's outermost shell, forming a positive sodium ion (Na⁺) and a negative chloride ion (Cl⁻).</div>
+      </div>
+      <p style="font-size:0.9em; color:#666;">This is exactly why spaced recap matters. The same core Year 9 chemistry keeps reappearing in new contexts throughout Year 10 and Year 11.</p>
+    </div>
+  </div>
+
+  <!-- REVISE THIS TOPIC -->
+  <div class="panel" id="panel-revise-b">
+    <button class="panel-head" onclick="togglePanel('panel-revise-b')">Revise this topic: ready-made resources <span class="chev">▶</span></button>
+    <div class="panel-body">
+      <p><strong>Knowledge Organiser:</strong> <a href="https://mrhussain-chem.github.io/Y10-Knowledge-Organiser/" target="_blank">Year 10 Knowledge Organiser</a></p>
+      <p><strong>Quiz:</strong> <a href="https://mrhussain-chem.github.io/Y10-Chem-Quiz/" target="_blank">Year 10 Summary Quiz</a></p>
+      <p><strong>Physics &amp; Maths Tutor (PMT):</strong></p>
+      <ul class="linklist">
+        <li><a href="https://www.physicsandmathstutor.com/pdfpages/?pdf=https%3A%2F%2Fpmt.physicsandmathstutor.com%2Fdownload%2FChemistry%2FGCSE%2FNotes%2FAQA%2F2-BondingStructure-and-the-Properties-of-Matter%2FDefinitions%2520-%2520Topic%25202%2520Bonding%2C%2520Structure%2C%2520and%2520the%2520Properties%2520of%2520Matter%2520-%2520AQA%2520Chemistry%2520GCSE.pdf" target="_blank">Key definitions: Bonding, Structure &amp; Properties of Matter</a></li>
+        <li><a href="https://www.physicsandmathstutor.com/chemistry-revision/gcse-aqa/bonding-structure-properties-of-matter/flashcards/" target="_blank">Flashcards</a></li>
+        <li><a href="https://www.physicsandmathstutor.com/pdfpages/?pdf=https%3A%2F%2Fpmt.physicsandmathstutor.com%2Fdownload%2FChemistry%2FGCSE%2FNotes%2FAQA%2F2-BondingStructure-and-the-Properties-of-Matter%2FSummary%2F2.1%2520Chemical%2520bonds%2520and%2520types%2520of%2520bonding.pdf" target="_blank">Summary notes: Chemical bonds &amp; types of bonding</a></li>
+        <li><a href="https://www.physicsandmathstutor.com/pdfpages/?pdf=https%3A%2F%2Fpmt.physicsandmathstutor.com%2Fdownload%2FChemistry%2FGCSE%2FNotes%2FAQA%2F2-BondingStructure-and-the-Properties-ofMatter%2FSummary%2F2.2.%2520How%2520bonding%2520and%2520structure%2520are%2520related%2520to%2520the%2520properties%2520of%2520substances.pdf" target="_blank">Summary notes: Bonding, structure &amp; properties</a></li>
+        <li><a href="https://www.physicsandmathstutor.com/pdfpages/?pdf=https%3A%2F%2Fpmt.physicsandmathstutor.com%2Fdownload%2FChemistry%2FGCSE%2FNotes%2FAQA%2F2-BondingStructure-and-the-Properties-ofMatter%2FSummary%2F2.3.%2520Structure%2520and%2520bonding%2520of%2520carbon.pdf" target="_blank">Summary notes: Structure &amp; bonding of carbon</a></li>
+        <li><em>Want more practice?</em> Past paper questions and mark schemes are linked in the Knowledge Organiser.</li>
+      </ul>
+      <p>Missed the lesson? Video reviews are in the "Stuck, absent, or missed this lesson?" box above.</p>
+    </div>
+  </div>
+
+</section>
+<section class="topic" id="topic-metals">
+
+  <div class="jumpnav">
+    <button onclick="openStep('m-warm')">Warm-up</button>
+    <button onclick="openStep('m-learn')">Learn</button>
+    <button onclick="openStep('m-mcq')">Quick Check</button>
+    <button onclick="openStep('m-fill')">Fill the Blanks</button>
+    <button onclick="openStep('m-exam')">Exam-Style</button>
+    <button onclick="openStep('m-extended')">Extended Answer</button>
+    <button onclick="openStep('m-recap')">Recap &amp; Connect</button>
+  </div>
+
+  <div class="panel" id="panel-advice-m">
+    <button class="panel-head" onclick="togglePanel('panel-advice-m')">How to revise this topic, and why it works <span class="chev">▶</span></button>
+    <div class="panel-body">
+      <p>Metallic bonding is a third type of bonding, alongside ionic and covalent from the last topic. Try comparing all three side by side rather than learning them in isolation.</p>
+      <p>Made the same mistake twice? Check your notes are correct first, then bring it to your chemistry teacher or an intervention session.</p>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-help-m">
+    <button class="panel-head" onclick="togglePanel('panel-help-m')">Stuck, absent, or missed this lesson? <span class="chev">▶</span></button>
+    <div class="panel-body">
+      <ul class="linklist">
+        <li><a href="https://continuityoak.org.uk/Lessons?r=487" target="_blank">Metals: Lesson 1</a></li>
+        <li><a href="https://continuityoak.org.uk/Lessons?r=1754" target="_blank">Metals: Lesson 2</a></li>
+        <li><a href="https://continuityoak.org.uk/Lessons?r=1148" target="_blank">Metals: Lesson 3</a></li>
+        <li><a href="https://continuityoak.org.uk/Lessons?r=1154" target="_blank">Metals: Lesson 4</a></li>
+      </ul>
+      <p>Checklists before assessments, homework booklets and more revision links are in your <strong>Year 10 chemistry Showbie area</strong>. If you're not sure which lesson to watch, reach out to your chemistry teacher for help and support.</p>
+    </div>
+  </div>
+
+  <!-- STEP 1: WARM UP -->
+  <div class="step open" id="m-warm">
+    <button class="step-head" onclick="toggleStep('m-warm')">Step 1: Warm-up <span class="chev">▶</span></button>
+    <div class="step-body">
+      <p>Quick recall. No score recorded.</p>
+      <div class="q">
+        <p class="prompt">Last lesson: In covalent bonding, atoms share pairs of electrons. In ionic bonding, electrons are transferred. What do you think happens to electrons in a metal?</p>
+        <input type="text" class="blank" id="mw1" placeholder="type your guess">
+        <button class="check" onclick="checkWarm('mw1','feedback-mw1',['delocalised','they become delocalised','free to move'])">Check</button>
+        <button class="hint" id="reveal-mw1" style="display:none;" onclick="revealWarm('mw1','delocalised')">📋 Show answer</button>
+        <div class="feedback" id="feedback-mw1"></div>
+      </div>
+      <div class="recap"><strong>Last year (Y9 recap):</strong> Metals are found on the left and centre of the periodic table. Can you remember one physical property that most metals share?</div>
+      <p style="font-size:0.9em; color:#666;">Couldn't answer these? That's your diagnostic. These are the ideas to revise first before moving on.</p>
+    </div>
+  </div>
+
+  <!-- STEP 2: LEARN -->
+  <div class="step" id="m-learn">
+    <button class="step-head" onclick="toggleStep('m-learn')">Step 2: Learn <span class="chev">▶</span></button>
+    <div class="step-body">
+
+      <div class="learncard">
+        <h4>Metallic bonding</h4>
+        <p>A metal is a <strong>giant structure</strong> of atoms arranged in regular layers. Each metal atom loses the electrons in its outermost shell, forming positive metal ions. These electrons don't stay attached to any one atom. They become <strong>delocalised</strong>, forming a "sea" of electrons that can move freely throughout the whole structure.</p>
+        <p>Metallic bonding is the strong electrostatic attraction between the positive metal ions and the negative sea of delocalised electrons.</p>
+      </div>
+
+      <svg class="rategraph" viewBox="0 0 420 180" xmlns="http://www.w3.org/2000/svg">
+        <text x="120" y="16" font-size="12" fill="#666">Positive metal ions in a "sea" of electrons</text>
+        <g fill="#2f6f6b">
+          <circle cx="80" cy="60" r="14"/><circle cx="140" cy="60" r="14"/><circle cx="200" cy="60" r="14"/><circle cx="260" cy="60" r="14"/><circle cx="320" cy="60" r="14"/>
+          <circle cx="80" cy="110" r="14"/><circle cx="140" cy="110" r="14"/><circle cx="200" cy="110" r="14"/><circle cx="260" cy="110" r="14"/><circle cx="320" cy="110" r="14"/>
+          <circle cx="80" cy="160" r="14"/><circle cx="140" cy="160" r="14"/><circle cx="200" cy="160" r="14"/><circle cx="260" cy="160" r="14"/><circle cx="320" cy="160" r="14"/>
+        </g>
+        <g fill="#a4322a">
+          <circle cx="110" cy="60" r="3"/><circle cx="170" cy="85" r="3"/><circle cx="230" cy="60" r="3"/><circle cx="290" cy="90" r="3"/>
+          <circle cx="110" cy="130" r="3"/><circle cx="170" cy="135" r="3"/><circle cx="230" cy="110" r="3"/><circle cx="290" cy="140" r="3"/>
+          <circle cx="150" cy="45" r="3"/><circle cx="270" cy="45" r="3"/><circle cx="60" cy="90" r="3"/><circle cx="340" cy="90" r="3"/>
+        </g>
+      </svg>
+      <p style="font-size:0.85em; color:#666; text-align:center;">Green circles = positive metal ions in fixed layers. Red dots = delocalised electrons, free to move anywhere.</p>
+
+      <div class="learncard">
+        <h4>Properties explained by metallic bonding</h4>
+        <p><strong>High melting/boiling points:</strong> strong metallic bonds throughout the giant structure need lots of energy to overcome.</p>
+        <p><strong>Good conductors of electricity and heat:</strong> the delocalised electrons are free to move and carry charge/energy through the structure.</p>
+        <p><strong>Malleable</strong> (can be bent/hammered into shape): the layers of ions can slide over each other without breaking the metallic bonds, since the sea of electrons moves with them and keeps holding the structure together.</p>
+      </div>
+
+      <div class="learncard">
+        <h4>Alloys</h4>
+        <p>An <strong>alloy</strong> is a mixture of a metal with one or more other elements (usually another metal, or carbon). Pure metals are often too soft for practical use, so alloys are made to improve their properties. For example, steel (iron + carbon) is harder than pure iron.</p>
+        <p>Alloys are harder than pure metals because the different-sized atoms <strong>distort the regular layers</strong>, making it harder for the layers to slide over each other.</p>
+      </div>
+
+      <div class="reject"><strong>Don't write this:</strong> "Alloys are harder because the atoms are bigger" on its own. You must explain <strong>why</strong> that matters: different-sized atoms distort the regular arrangement of layers, so the layers can't slide over each other as easily as in a pure metal.</div>
+
+    </div>
+  </div>
+
+  <!-- STEP 3: MCQ -->
+  <div class="step" id="m-mcq">
+    <button class="step-head" onclick="toggleStep('m-mcq')">Step 3: Quick Check (Multiple Choice) <span class="chev">▶</span></button>
+    <div class="step-body">
+
+      <div class="q" id="mmcq1">
+        <p class="prompt">1. In metallic bonding, the outer-shell electrons become:</p>
+        <div class="options">
+          <label><input type="radio" name="mmcq1" onclick="answerMCQ('mmcq1',this,false)"> Shared between two atoms</label>
+          <label><input type="radio" name="mmcq1" onclick="answerMCQ('mmcq1',this,true)"> Delocalised across the whole structure</label>
+          <label><input type="radio" name="mmcq1" onclick="answerMCQ('mmcq1',this,false)"> Transferred to a non-metal atom</label>
+        </div>
+        <div class="feedback" id="fb-mmcq1"></div>
+      </div>
+
+      <div class="q" id="mmcq2">
+        <p class="prompt">2. Why are metals good conductors of electricity?</p>
+        <div class="options">
+          <label><input type="radio" name="mmcq2" onclick="answerMCQ('mmcq2',this,false)"> They have no charge</label>
+          <label><input type="radio" name="mmcq2" onclick="answerMCQ('mmcq2',this,true)"> Delocalised electrons are free to move and carry charge</label>
+          <label><input type="radio" name="mmcq2" onclick="answerMCQ('mmcq2',this,false)"> Their ions are negative</label>
+        </div>
+        <div class="feedback" id="fb-mmcq2"></div>
+      </div>
+
+      <div class="q" id="mmcq3">
+        <p class="prompt">3. Why are alloys generally harder than pure metals?</p>
+        <div class="options">
+          <label><input type="radio" name="mmcq3" onclick="answerMCQ('mmcq3',this,false)"> Alloys have more delocalised electrons</label>
+          <label><input type="radio" name="mmcq3" onclick="answerMCQ('mmcq3',this,true)"> Different-sized atoms distort the layers, making them harder to slide</label>
+          <label><input type="radio" name="mmcq3" onclick="answerMCQ('mmcq3',this,false)"> Alloys have no metallic bonding</label>
+        </div>
+        <div class="feedback" id="fb-mmcq3"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STEP 4: FILL THE BLANKS -->
+  <div class="step" id="m-fill">
+    <button class="step-head" onclick="toggleStep('m-fill')">Step 4: Fill the Blanks <span class="chev">▶</span></button>
+    <div class="step-body">
+      <p><strong>Word bank: delocalised, malleable, alloy, distort</strong></p>
+      <div class="q" id="mfillA">
+        <p>In a metal, outer-shell electrons become <input type="text" class="blank mfA" data-ans="delocalised">, forming a sea of electrons. This allows layers of ions to slide over each other, making metals <input type="text" class="blank mfA" data-ans="malleable">. An <input type="text" class="blank mfA" data-ans="alloy"> is a mixture of a metal with other elements. Atoms of different sizes <input type="text" class="blank mfA" data-ans="distort"> the regular layers, making alloys harder than pure metals.</p>
+        <button class="check" onclick="checkGroup('mfA','mfbA',4)">Check answers</button>
+        <div class="feedback" id="mfbA"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 5: EXAM STYLE -->
+  <div class="step" id="m-exam">
+    <button class="step-head" onclick="toggleStep('m-exam')">Step 5: Exam-Style Questions <span class="chev">▶</span></button>
+    <div class="step-body">
+
+      <div class="q">
+        <p class="prompt">1. Explain why metals are good conductors of electricity. <em>(2 marks)</em></p>
+        <textarea class="longans" id="mex1"></textarea>
+        <br>
+        <button class="reveal-btn" onclick="toggleModel('mm1')">✅ Reveal model answer</button>
+        <div class="modelans" id="mm1">
+          <strong>Model answer:</strong> Metals contain delocalised electrons that are free to move throughout the structure, allowing them to carry an electric charge.
+        </div>
+      </div>
+
+      <div class="q">
+        <p class="prompt">2. Steel is an alloy of iron and carbon. Explain why steel is harder than pure iron. <em>(3 marks)</em></p>
+        <textarea class="longans" id="mex2" style="min-height:90px;"></textarea>
+        <br>
+        <button class="hint" onclick="toggleHint('mh2')">🧠 Hint</button>
+        <div class="hintbox" id="mh2">Think about the different sizes of iron and carbon atoms, and what that does to the regular layers.</div>
+        <button class="reveal-btn" onclick="toggleModel('mm2')">✅ Reveal model answer</button>
+        <div class="modelans" id="mm2">
+          <strong>Model answer:</strong> Carbon atoms are a different size to iron atoms, so they distort the regular layers of iron ions. This makes it harder for the layers to slide over each other, so steel is harder than pure iron.
+        </div>
+      </div>
+
+      <div class="q">
+        <p class="prompt">3. Explain, in terms of structure and bonding, why metals can be bent and shaped (are malleable). <em>(2 marks)</em></p>
+        <textarea class="longans" id="mex3"></textarea>
+        <br>
+        <button class="reveal-btn" onclick="toggleModel('mm3')">✅ Reveal model answer</button>
+        <div class="modelans" id="mm3">
+          <strong>Model answer:</strong> The layers of metal ions can slide over each other when a force is applied. The sea of delocalised electrons moves with them, so the metallic bonding holds the structure together throughout. It doesn't break.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STEP 6: EXTENDED ANSWER -->
+  <div class="step" id="m-extended">
+    <button class="step-head" onclick="toggleStep('m-extended')">Step 6: Extended Answer <span class="chev">▶</span></button>
+    <div class="step-body">
+      <div class="q">
+        <p class="prompt">Compare the structure of a pure metal with the structure of an alloy, and explain how this difference affects their hardness.</p>
+        <textarea class="longans" id="mextA" style="min-height:110px;"></textarea>
+        <br>
+        <button class="reveal-btn" onclick="toggleModel('mmA')">✅ Reveal model answer &amp; what a strong answer includes</button>
+        <div class="modelans" id="mmA">
+          <strong>Model answer:</strong> A pure metal has atoms of only one size, arranged in regular layers that can slide over each other easily, making pure metals relatively soft. An alloy contains atoms of different sizes, which distort the regular layers. This makes it much harder for the layers to slide, so alloys are generally harder than pure metals.
+          <p><strong>A strong answer includes:</strong> (1) regular layers in a pure metal, (2) different atom sizes in an alloy distorting the layers, (3) the link to why that makes alloys harder.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 7: RECAP & CONNECT -->
+  <div class="step" id="m-recap">
+    <button class="step-head" onclick="toggleStep('m-recap')">Step 7: Recap &amp; Connect (Year 9 link) <span class="chev">▶</span></button>
+    <div class="step-body">
+      <div class="recap"><strong>Connecting back to Year 9: Atomic Structure:</strong> Metals lose electrons to form positive ions. You first met this idea with Group 1 metals in Year 9.</div>
+      <div class="q">
+        <p class="prompt">(a) When a Group 1 metal like sodium reacts, what charge does the ion it forms have, and why? <em>(2 marks)</em></p>
+        <textarea class="longans" id="metrc1"></textarea>
+        <br>
+        <button class="reveal-btn" onclick="toggleModel('mmrc1')">✅ Reveal answer</button>
+        <div class="modelans" id="mmrc1">Sodium forms a 1+ ion, because it loses the one electron in its outermost shell.</div>
+      </div>
+      <p style="font-size:0.9em; color:#666;">This is exactly why spaced recap matters. The same core Year 9 chemistry keeps reappearing in new contexts throughout Year 10 and Year 11.</p>
+    </div>
+  </div>
+
+  <!-- REVISE THIS TOPIC -->
+  <div class="panel" id="panel-revise-m">
+    <button class="panel-head" onclick="togglePanel('panel-revise-m')">Revise this topic: ready-made resources <span class="chev">▶</span></button>
+    <div class="panel-body">
+      <p><strong>Knowledge Organiser:</strong> <a href="https://mrhussain-chem.github.io/Y10-Knowledge-Organiser/" target="_blank">Year 10 Knowledge Organiser</a></p>
+      <p><strong>Quiz:</strong> <a href="https://mrhussain-chem.github.io/Y10-Chem-Quiz/" target="_blank">Year 10 Summary Quiz</a></p>
+      <p><strong>Physics &amp; Maths Tutor (PMT):</strong></p>
+      <ul class="linklist">
+        <li><a href="https://www.physicsandmathstutor.com/pdfpages/?pdf=https%3A%2F%2Fpmt.physicsandmathstutor.com%2Fdownload%2FChemistry%2FGCSE%2FNotes%2FAQA%2F2-BondingStructure-and-the-Properties-of-Matter%2FSummary%2F2.1%2520Chemical%2520bonds%2520and%2520types%2520of%2520bonding.pdf" target="_blank">Summary notes: Chemical bonds &amp; types of bonding (includes metallic bonding)</a></li>
+        <li><a href="https://www.physicsandmathstutor.com/chemistry-revision/gcse-aqa/bonding-structure-properties-of-matter/flashcards/" target="_blank">Flashcards: Bonding, Structure &amp; Properties of Matter</a></li>
+      </ul>
+      <p>Missed the lesson? Video reviews are in the "Stuck, absent, or missed this lesson?" box above.</p>
+    </div>
+  </div>
+
+</section>
+<section class="topic" id="topic-extraction">
+
+  <div class="jumpnav">
+    <button onclick="openStep('x-warm')">Warm-up</button>
+    <button onclick="openStep('x-learn')">Learn</button>
+    <button onclick="openStep('x-mcq')">Quick Check</button>
+    <button onclick="openStep('x-fill')">Fill the Blanks</button>
+    <button onclick="openStep('x-exam')">Exam-Style</button>
+    <button onclick="openStep('x-extended')">Extended Answer</button>
+    <button onclick="openStep('x-recap')">Recap &amp; Connect</button>
+  </div>
+
+  <div class="panel" id="panel-advice-x">
+    <button class="panel-head" onclick="togglePanel('panel-advice-x')">How to revise this topic, and why it works <span class="chev">▶</span></button>
+    <div class="panel-body">
+      <p>The reactivity series is the key that unlocks this whole topic. Learn the order first (including where carbon sits), and the extraction method for any metal follows logically from its position.</p>
+      <p>Made the same mistake twice? Check your notes are correct first, then bring it to your chemistry teacher or an intervention session.</p>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-help-x">
+    <button class="panel-head" onclick="togglePanel('panel-help-x')">Stuck, absent, or missed this lesson? <span class="chev">▶</span></button>
+    <div class="panel-body">
+      <p>Checklists before assessments, homework booklets and more revision links are in your <strong>Year 10 chemistry Showbie area</strong>. If you're not sure which lesson to watch, reach out to your chemistry teacher for help and support.</p>
+    </div>
+  </div>
+
+  <!-- STEP 1: WARM UP -->
+  <div class="step open" id="x-warm">
+    <button class="step-head" onclick="toggleStep('x-warm')">Step 1: Warm-up <span class="chev">▶</span></button>
+    <div class="step-body">
+      <p>Quick recall. No score recorded.</p>
+      <div class="q">
+        <p class="prompt">Last year (Y9): Going down Group 1, does reactivity increase or decrease?</p>
+        <input type="text" class="blank" id="xw1" placeholder="type your answer">
+        <button class="check" onclick="checkWarm('xw1','feedback-xw1',['increase','increases'])">Check</button>
+        <button class="hint" id="reveal-xw1" style="display:none;" onclick="revealWarm('xw1','increase')">📋 Show answer</button>
+        <div class="feedback" id="feedback-xw1"></div>
+      </div>
+      <div class="recap"><strong>Last lesson:</strong> Gold and silver are very unreactive. What do you think that means for how they're found in the ground?</div>
+      <p style="font-size:0.9em; color:#666;">Couldn't answer these? That's your diagnostic. These are the ideas to revise first before moving on.</p>
+    </div>
+  </div>
+
+  <!-- STEP 2: LEARN -->
+  <div class="step" id="x-learn">
+    <button class="step-head" onclick="toggleStep('x-learn')">Step 2: Learn <span class="chev">▶</span></button>
+    <div class="step-body">
+
+      <div class="learncard">
+        <h4>The reactivity series decides how a metal is extracted</h4>
+        <p>An <strong>ore</strong> is a rock that contains enough of a metal (usually as a metal compound) to make it worth extracting. The reactivity series tells you exactly which extraction method to use, because it compares each metal's reactivity to <strong>carbon</strong>:</p>
+      </div>
+
+      <svg class="rategraph" viewBox="0 0 420 260" xmlns="http://www.w3.org/2000/svg">
+        <text x="10" y="16" font-size="11" fill="#666">Most reactive</text>
+        <text x="10" y="248" font-size="11" fill="#666">Least reactive</text>
+        <line x1="30" y1="25" x2="30" y2="235" stroke="#2b2b2b" stroke-width="2" marker-end="url(#arrow)"/>
+        <text x="70" y="35" font-size="12" fill="#2b2b2b">Potassium, Sodium, Calcium, Magnesium, Aluminium</text>
+        <rect x="60" y="42" width="330" height="2" fill="#2d5f8a"/>
+        <text x="70" y="60" font-size="12" fill="#2d5f8a" font-weight="bold">Extracted by electrolysis</text>
+        <line x1="55" y1="70" x2="390" y2="70" stroke="#a4322a" stroke-width="2" stroke-dasharray="4,3"/>
+        <text x="70" y="66" font-size="12" fill="#a4322a" font-weight="bold">(Carbon)</text>
+        <text x="70" y="90" font-size="12" fill="#2b2b2b">Zinc, Iron, Tin, Lead</text>
+        <text x="70" y="110" font-size="12" fill="#2f6f6b" font-weight="bold">Extracted by reduction with carbon</text>
+        <line x1="55" y1="122" x2="390" y2="122" stroke="#666" stroke-width="1" stroke-dasharray="2,2"/>
+        <text x="70" y="118" font-size="11" fill="#666">(Hydrogen)</text>
+        <text x="70" y="140" font-size="12" fill="#2b2b2b">Copper</text>
+        <text x="70" y="160" font-size="12" fill="#2f6f6b" font-weight="bold">Extracted by reduction with carbon</text>
+        <text x="70" y="185" font-size="12" fill="#2b2b2b">Silver, Gold</text>
+        <text x="70" y="205" font-size="12" fill="#b8860b" font-weight="bold">Found native (unreactive, no extraction needed)</text>
+      </svg>
+
+      <div class="learncard">
+        <h4>Three extraction routes</h4>
+        <p><strong>More reactive than carbon</strong> (potassium → aluminium): extracted using <strong>electrolysis</strong>. This uses large amounts of energy and is expensive, but it's the only method powerful enough to separate very reactive metals from their compounds. You'll learn how electrolysis works in Year 11.</p>
+        <p><strong>Less reactive than carbon</strong> (zinc → copper): extracted by <strong>reduction with carbon</strong>. Carbon is more reactive than these metals, so it can displace them from their oxides. Carbon takes the oxygen, and the pure metal is left behind.</p>
+        <p><strong>Very unreactive</strong> (silver, gold): found in the Earth as the pure, uncombined metal, called the <strong>native</strong> state, so they don't need to be chemically extracted at all.</p>
+      </div>
+
+      <div class="learncard">
+        <h4>Oxidation and reduction</h4>
+        <p><strong>Reduction</strong> = loss of oxygen. <strong>Oxidation</strong> = gain of oxygen. When carbon reduces a metal oxide, the metal oxide is reduced (loses oxygen) and the carbon is oxidised (gains oxygen, forming carbon dioxide).</p>
+      </div>
+
+      <div class="learncard">
+        <h4>Extracting metals from low-grade ores: phytomining and bioleaching</h4>
+        <p>As high-grade ores become scarcer, low-grade ores (with only a small amount of metal compound) are increasingly used. Traditional mining of low-grade ore uses huge amounts of energy and causes significant environmental damage from digging up and moving large amounts of rock. Two alternative methods are used instead:</p>
+      </div>
+
+      <svg class="rategraph" viewBox="0 0 440 280" xmlns="http://www.w3.org/2000/svg">
+        <rect x="140" y="10" width="160" height="30" rx="6" fill="#e8d9b0" stroke="#b8860b"/>
+        <text x="165" y="30" font-size="13" fill="#2b2b2b">Low-grade ore</text>
+
+        <text x="30" y="60" font-size="11" fill="#2f6f6b" font-weight="bold">Phytomining</text>
+        <rect x="20" y="65" width="140" height="40" rx="6" fill="var(--green-bg)" stroke="#2e7d4f"/>
+        <text x="28" y="82" font-size="10" fill="#2b2b2b">Grow plants in soil</text>
+        <text x="28" y="96" font-size="10" fill="#2b2b2b">containing metal compounds</text>
+        <line x1="90" y1="40" x2="90" y2="65" stroke="#2b2b2b" stroke-width="1.5"/>
+
+        <text x="60" y="122" font-size="10" fill="#2b2b2b">↓ burn plants</text>
+        <rect x="20" y="130" width="140" height="30" rx="6" fill="#ddd" stroke="#999"/>
+        <text x="65" y="150" font-size="11" fill="#2b2b2b">Ash</text>
+
+        <text x="290" y="60" font-size="11" fill="#2f6f6b" font-weight="bold">Bioleaching</text>
+        <rect x="260" y="65" width="150" height="40" rx="6" fill="var(--blue-bg)" stroke="#2d5f8a"/>
+        <text x="268" y="82" font-size="10" fill="#2b2b2b">Bacteria act on the ore,</text>
+        <text x="268" y="96" font-size="10" fill="#2b2b2b">producing a leachate</text>
+        <line x1="330" y1="40" x2="330" y2="65" stroke="#2b2b2b" stroke-width="1.5"/>
+
+        <text x="20" y="182" font-size="10" fill="#2b2b2b">↓ add sulfuric acid</text>
+        <rect x="120" y="195" width="180" height="40" rx="6" fill="#c9e8ec" stroke="#2d5f8a"/>
+        <text x="130" y="212" font-size="10" fill="#2b2b2b">Leachate: solution</text>
+        <text x="130" y="226" font-size="10" fill="#2b2b2b">containing metal compounds</text>
+
+        <line x1="90" y1="160" x2="140" y2="195" stroke="#2b2b2b" stroke-width="1.5"/>
+        <line x1="330" y1="105" x2="280" y2="195" stroke="#2b2b2b" stroke-width="1.5"/>
+
+        <text x="60" y="260" font-size="10" fill="#2b2b2b">↓ displacement with scrap iron</text>
+        <text x="270" y="260" font-size="10" fill="#2b2b2b">↓ OR electrolysis (Year 11)</text>
+        <rect x="140" y="265" width="150" height="1" fill="none"/>
+      </svg>
+      <p style="font-size:0.85em; color:#666; text-align:center;">Both routes lead to a <strong>leachate</strong>. The pure metal is then obtained by displacement or electrolysis.</p>
+
+      <div class="learncard">
+        <h4>Getting pure metal from the leachate</h4>
+        <p><strong>Displacement:</strong> adding a more reactive metal (e.g. scrap iron) to the leachate causes it to displace the less reactive target metal (e.g. copper) from solution. Iron goes into solution, and pure copper is deposited.</p>
+        <p><strong>Electrolysis</strong> can also be used to obtain the pure metal from the leachate. You'll learn how this works in detail in Year 11.</p>
+        <div class="tip"><strong>Examiner tip:</strong> Phytomining and bioleaching are <em>slower</em> than traditional mining, but they avoid digging up large amounts of rock, use less energy, and can extract metal from ore that wouldn't otherwise be worth mining. That's the trade-off examiners want you to weigh up.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STEP 3: MCQ -->
+  <div class="step" id="x-mcq">
+    <button class="step-head" onclick="toggleStep('x-mcq')">Step 3: Quick Check (Multiple Choice) <span class="chev">▶</span></button>
+    <div class="step-body">
+
+      <div class="q" id="xmcq1">
+        <p class="prompt">1. Aluminium is more reactive than carbon. How is it extracted?</p>
+        <div class="options">
+          <label><input type="radio" name="xmcq1" onclick="answerMCQ('xmcq1',this,true)"> Electrolysis</label>
+          <label><input type="radio" name="xmcq1" onclick="answerMCQ('xmcq1',this,false)"> Reduction with carbon</label>
+          <label><input type="radio" name="xmcq1" onclick="answerMCQ('xmcq1',this,false)"> Found native</label>
+        </div>
+        <div class="feedback" id="fb-xmcq1"></div>
+      </div>
+
+      <div class="q" id="xmcq2">
+        <p class="prompt">2. Iron is less reactive than carbon. How is it extracted?</p>
+        <div class="options">
+          <label><input type="radio" name="xmcq2" onclick="answerMCQ('xmcq2',this,false)"> Electrolysis</label>
+          <label><input type="radio" name="xmcq2" onclick="answerMCQ('xmcq2',this,true)"> Reduction with carbon</label>
+          <label><input type="radio" name="xmcq2" onclick="answerMCQ('xmcq2',this,false)"> Found native</label>
+        </div>
+        <div class="feedback" id="fb-xmcq2"></div>
+      </div>
+
+      <div class="q" id="xmcq3">
+        <p class="prompt">3. Gold is found in the ground as the pure metal. This is because gold is:</p>
+        <div class="options">
+          <label><input type="radio" name="xmcq3" onclick="answerMCQ('xmcq3',this,true)"> Very unreactive</label>
+          <label><input type="radio" name="xmcq3" onclick="answerMCQ('xmcq3',this,false)"> Very reactive</label>
+          <label><input type="radio" name="xmcq3" onclick="answerMCQ('xmcq3',this,false)"> Radioactive</label>
+        </div>
+        <div class="feedback" id="fb-xmcq3"></div>
+      </div>
+
+      <div class="q" id="xmcq4">
+        <p class="prompt">4. In phytomining, what happens after the plants are harvested?</p>
+        <div class="options">
+          <label><input type="radio" name="xmcq4" onclick="answerMCQ('xmcq4',this,true)"> They are burned to produce ash</label>
+          <label><input type="radio" name="xmcq4" onclick="answerMCQ('xmcq4',this,false)"> They are dissolved in water</label>
+          <label><input type="radio" name="xmcq4" onclick="answerMCQ('xmcq4',this,false)"> They are electrolysed directly</label>
+        </div>
+        <div class="feedback" id="fb-xmcq4"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STEP 4: FILL THE BLANKS -->
+  <div class="step" id="x-fill">
+    <button class="step-head" onclick="toggleStep('x-fill')">Step 4: Fill the Blanks <span class="chev">▶</span></button>
+    <div class="step-body">
+      <p><strong>Word bank: electrolysis, native, reduction, leachate</strong></p>
+      <div class="q" id="xfillA">
+        <p>Metals more reactive than carbon are extracted using <input type="text" class="blank xfA" data-ans="electrolysis">. Metals less reactive than carbon are extracted by <input type="text" class="blank xfA" data-ans="reduction"> with carbon. Very unreactive metals like gold are found in their <input type="text" class="blank xfA" data-ans="native"> state. Phytomining and bioleaching both produce a <input type="text" class="blank xfA" data-ans="leachate">, a solution containing metal compounds.</p>
+        <button class="check" onclick="checkGroup('xfA','xfbA',4)">Check answers</button>
+        <div class="feedback" id="xfbA"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 5: EXAM STYLE -->
+  <div class="step" id="x-exam">
+    <button class="step-head" onclick="toggleStep('x-exam')">Step 5: Exam-Style Questions <span class="chev">▶</span></button>
+    <div class="step-body">
+
+      <div class="q">
+        <p class="prompt">1. Zinc oxide is heated with carbon to extract zinc. Name this type of reaction, and explain what happens to the zinc oxide and to the carbon in terms of oxidation and reduction. <em>(3 marks)</em></p>
+        <textarea class="longans" id="xex1" style="min-height:90px;"></textarea>
+        <br>
+        <button class="reveal-btn" onclick="toggleModel('xm1')">✅ Reveal model answer</button>
+        <div class="modelans" id="xm1">
+          <strong>Model answer:</strong> This is a reduction reaction (carbon displaces zinc from zinc oxide). The zinc oxide is <strong>reduced</strong> (loses oxygen) to form zinc metal. The carbon is <strong>oxidised</strong> (gains oxygen) to form carbon dioxide.
+        </div>
+      </div>
+
+      <div class="q">
+        <p class="prompt">2. Explain why aluminium cannot be extracted from its ore by reduction with carbon, and must instead be extracted by electrolysis. <em>(2 marks)</em></p>
+        <textarea class="longans" id="xex2"></textarea>
+        <br>
+        <button class="reveal-btn" onclick="toggleModel('xm2')">✅ Reveal model answer</button>
+        <div class="modelans" id="xm2">
+          <strong>Model answer:</strong> Aluminium is more reactive than carbon, so carbon cannot displace it from its compound. Electrolysis is needed instead, even though it uses much more energy and is more expensive.
+        </div>
+      </div>
+
+      <div class="q">
+        <p class="prompt">3. Describe how copper can be extracted from a low-grade ore using bioleaching. <em>(4 marks)</em></p>
+        <textarea class="longans" id="xex3" style="min-height:100px;"></textarea>
+        <br>
+        <button class="reveal-btn" onclick="toggleModel('xm3')">✅ Reveal model answer</button>
+        <div class="modelans" id="xm3">
+          <strong>Model answer:</strong> Bacteria act on the low-grade ore, producing a leachate solution containing copper compounds. Pure copper can then be obtained from the leachate either by displacement, adding scrap iron, which is more reactive than copper and displaces it from solution, or by electrolysis.
+        </div>
+      </div>
+
+      <div class="q">
+        <p class="prompt">4. Give one advantage and one disadvantage of using phytomining or bioleaching instead of traditional mining for a low-grade ore. <em>(2 marks)</em></p>
+        <textarea class="longans" id="xex4"></textarea>
+        <br>
+        <button class="reveal-btn" onclick="toggleModel('xm4')">✅ Reveal model answer</button>
+        <div class="modelans" id="xm4">
+          <strong>Accepted answers:</strong> Advantage: avoids digging up and moving large amounts of rock, so causes less environmental damage / uses less energy / allows metal to be extracted from ore that wouldn't otherwise be economical to mine. Disadvantage: much slower than traditional mining.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STEP 6: EXTENDED ANSWER -->
+  <div class="step" id="x-extended">
+    <button class="step-head" onclick="toggleStep('x-extended')">Step 6: Extended Answer <span class="chev">▶</span></button>
+    <div class="step-body">
+      <div class="q">
+        <p class="prompt">Explain how the reactivity series is used to decide which method should be used to extract a metal from its ore, using at least two different extraction methods in your answer.</p>
+        <textarea class="longans" id="xextA" style="min-height:120px;"></textarea>
+        <br>
+        <button class="reveal-btn" onclick="toggleModel('xmA')">✅ Reveal model answer &amp; what a strong answer includes</button>
+        <div class="modelans" id="xmA">
+          <strong>Model answer:</strong> The reactivity series compares a metal's reactivity to carbon. Metals more reactive than carbon, such as aluminium, cannot be displaced by carbon and must be extracted using electrolysis instead. Metals less reactive than carbon, such as iron, can be extracted by reduction with carbon, since carbon displaces them from their oxide. Very unreactive metals like gold are found native and don't need extracting at all.
+          <p><strong>A strong answer includes:</strong> (1) the comparison to carbon as the key idea, (2) a correctly matched example and method for at least two categories, (3) correct use of "reduction" or "displace."</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 7: RECAP & CONNECT -->
+  <div class="step" id="x-recap">
+    <button class="step-head" onclick="toggleStep('x-recap')">Step 7: Recap &amp; Connect (Year 9 link) <span class="chev">▶</span></button>
+    <div class="step-body">
+      <div class="recap"><strong>Connecting back to Year 9: Recycling &amp; LCA:</strong> You looked at the environmental impact of using resources in Year 9. Phytomining and bioleaching are a good example of that same trade-off.</div>
+      <div class="q">
+        <p class="prompt">(a) Explain one reason why phytomining or bioleaching might be considered a more sustainable choice than traditional mining. <em>(2 marks)</em></p>
+        <textarea class="longans" id="xrc1"></textarea>
+        <br>
+        <button class="reveal-btn" onclick="toggleModel('mxrc1')">✅ Reveal answer</button>
+        <div class="modelans" id="mxrc1">It avoids digging up and moving large amounts of rock, reducing energy use and environmental damage to the landscape, similar to how reducing and reusing resources was preferred over extracting new raw materials in Year 9.</div>
+      </div>
+      <p style="font-size:0.9em; color:#666;">This is exactly why spaced recap matters. The same core Year 9 chemistry keeps reappearing in new contexts throughout Year 10 and Year 11.</p>
+    </div>
+  </div>
+
+  <!-- REVISE THIS TOPIC -->
+  <div class="panel" id="panel-revise-x">
+    <button class="panel-head" onclick="togglePanel('panel-revise-x')">Revise this topic: ready-made resources <span class="chev">▶</span></button>
+    <div class="panel-body">
+      <p><strong>Knowledge Organiser:</strong> <a href="https://mrhussain-chem.github.io/Y10-Knowledge-Organiser/" target="_blank">Year 10 Knowledge Organiser</a></p>
+      <p><strong>Quiz:</strong> <a href="https://mrhussain-chem.github.io/Y10-Chem-Quiz/" target="_blank">Year 10 Summary Quiz</a></p>
+      <p><strong>Physics &amp; Maths Tutor (PMT):</strong></p>
+      <ul class="linklist">
+        <li><a href="https://pmt.physicsandmathstutor.com/download/Chemistry/GCSE/Notes/AQA/4-Chemical-Changes/Summary/4.1.%20Reactivity%20of%20metals.pdf" target="_blank">Summary notes: Reactivity of metals</a></li>
+        <li><a href="https://pmt.physicsandmathstutor.com/download/Chemistry/GCSE/Topic-Qs/AQA/4-Chemical-Changes/Set-B/4.1%20Reactivity%20of%20Metals%20QP.pdf" target="_blank">Past paper questions: Reactivity of Metals</a> and <a href="https://pmt.physicsandmathstutor.com/download/Chemistry/GCSE/Topic-Qs/AQA/4-Chemical-Changes/Set-B/4.1%20Reactivity%20of%20Metals%20MS.pdf" target="_blank">mark scheme</a></li>
+        <li><a href="https://pmt.physicsandmathstutor.com/download/Chemistry/GCSE/Notes/AQA/10-Using-Resources/Summary/10.1.%20Using%20the%20Earth's%20resources%20and%20obtaining%20potable%20water.pdf" target="_blank">Summary notes: Using the Earth's resources (includes phytomining &amp; bioleaching)</a></li>
+        <li><a href="https://pmt.physicsandmathstutor.com/download/Chemistry/GCSE/Notes/AQA/10-Using-Resources/Definitions%20-%20Topic%2010%20Using%20Resources%20-%20AQA%20Chemistry%20GCSE.pdf" target="_blank">Key definitions: Using Resources</a></li>
+      </ul>
+      <p>Missed the lesson? Video reviews are in the "Stuck, absent, or missed this lesson?" box above.</p>
+    </div>
+  </div>
+
+</section>
+
+</main>
+
+<script>
+  function showTopic(id){
+    document.querySelectorAll('.topic').forEach(t=>t.classList.remove('active'));
+    document.getElementById('topic-'+id).classList.add('active');
+    document.querySelectorAll('#topicTabs button').forEach(b=>b.classList.remove('active'));
+    event.target.closest('button').classList.add('active');
+  }
+
+  function toggleStep(id){
+    document.getElementById(id).classList.toggle('open');
+  }
+  function openStep(id){
+    document.querySelectorAll('.step').forEach(s=>s.classList.remove('open'));
+    document.getElementById(id).classList.add('open');
+    document.getElementById(id).scrollIntoView({behavior:'smooth', block:'start'});
+  }
+  function togglePanel(id){
+    document.getElementById(id).classList.toggle('open');
+  }
+  function toggleHint(id){
+    document.getElementById(id).classList.toggle('show');
+  }
+  function toggleModel(id){
+    document.getElementById(id).classList.toggle('show');
+  }
+
+  function checkWarm(inputId, fbId, accepted){
+    const val = document.getElementById(inputId).value.trim().toLowerCase();
+    const fb = document.getElementById(fbId);
+    if(accepted.includes(val)){
+      fb.textContent = "Nice, that's right.";
+      fb.className = "feedback show good";
+    } else {
+      fb.textContent = "Not quite. Worth a quick look back at this before you carry on.";
+      fb.className = "feedback show try";
+      const revealBtn = document.getElementById('reveal-'+inputId);
+      if(revealBtn) revealBtn.style.display = 'inline-block';
+    }
+  }
+
+  function revealWarm(inputId, answer){
+    const fb = document.getElementById('feedback-'+inputId);
+    fb.textContent = "Answer: " + answer;
+    fb.className = "feedback show good";
+  }
+
+  function answerMCQ(name, chosenLabelInput, isCorrect){
+    const wrapper = chosenLabelInput.closest('.q');
+    const fb = wrapper.querySelector('.feedback');
+    wrapper.querySelectorAll('.options label').forEach(l=>{
+      l.classList.remove('correct','incorrect');
+    });
+    const label = chosenLabelInput.closest('label');
+    if(isCorrect){
+      label.classList.add('correct');
+      if(fb){ fb.textContent = "Correct!"; fb.className = "feedback show good"; }
+      wrapper.querySelectorAll('input[type=radio]').forEach(r=> r.disabled = true);
+    } else {
+      label.classList.add('incorrect');
+      chosenLabelInput.disabled = true;
+      if(fb){ fb.textContent = "Not that one, try again."; fb.className = "feedback show try"; }
+    }
+  }
+
+  function toggleCheck(box){
+    box.closest('label').classList.toggle('correct', false);
+  }
+
+  function checkTwo(btn, correctAnswers){
+    const wrapper = btn.closest('.q');
+    const boxes = wrapper.querySelectorAll('input[type=checkbox]');
+    let chosen = [];
+    boxes.forEach(b=>{
+      const text = b.closest('label').textContent.trim();
+      if(b.checked) chosen.push(text);
+    });
+    const fb = wrapper.querySelector('.feedback');
+    const correctSet = correctAnswers.slice().sort().join(',');
+    const chosenSet = chosen.slice().sort().join(',');
+    if(chosenSet === correctSet){
+      fb.textContent = "Correct. Well done!";
+      fb.className = "feedback show good";
+    } else {
+      fb.textContent = "Not quite. The correct answers were: " + correctAnswers.join(' and ') + ".";
+      fb.className = "feedback show try";
+    }
+  }
+
+  function checkGroup(cls, fbId, total){
+    const inputs = document.querySelectorAll('.'+cls);
+    let right = 0;
+    inputs.forEach(inp=>{
+      const ans = inp.dataset.ans.toLowerCase();
+      const val = inp.value.trim().toLowerCase();
+      if(val === ans){ inp.style.borderBottomColor = '#2e7d4f'; right++; }
+      else { inp.style.borderBottomColor = '#a4322a'; }
+    });
+    const fb = document.getElementById(fbId);
+    fb.className = "feedback show " + (right===total ? "good" : "try");
+    if(right===total){
+      fb.textContent = "You got " + right + " out of " + total + ". Well done!";
+    } else {
+      fb.textContent = "You got " + right + " out of " + total + ". Check the spelling of the key word too, and go back to your Knowledge Organiser for the ones you've missed.";
+    }
+  }
+</script>
+
+</body>
+</html>
