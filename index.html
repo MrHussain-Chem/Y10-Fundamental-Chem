@@ -109,6 +109,7 @@
   .htier .htier-label{ background:#6b3fa0; color:#fff; font-weight:bold; padding:6px 12px; font-size:0.85em; letter-spacing:0.5px; }
   .htier .htier-body{ padding:12px; }
   .htier h4{ margin:0 0 6px; color:#6b3fa0; }
+  .htag{ display:inline-block; background:#6b3fa0; color:#fff; font-weight:bold; font-size:0.72em; letter-spacing:0.5px; padding:2px 8px; border-radius:6px; vertical-align:middle; margin-right:6px; }
 
   .q{ border:1px solid var(--border); border-radius:10px; padding:12px; margin-bottom:12px; background:#fffdf7; }
   .q p.prompt{ font-weight:bold; margin-top:0; }
@@ -415,11 +416,11 @@
         <p class="prompt">5. A gas syringe is used to collect the gas from a reaction, and its measurements are taken every 30 seconds until the reaction stops. What type of variable is <strong>time</strong> in this investigation? <em>(1 mark)</em></p>
         <div class="options">
           <label><input type="radio" name="ex5" onclick="answerMCQ('ex5',this,false)"> Control variable</label>
-          <label><input type="radio" name="ex5" onclick="answerMCQ('ex5',this,true)"> Dependent variable</label>
-          <label><input type="radio" name="ex5" onclick="answerMCQ('ex5',this,false)"> Independent variable</label>
+          <label><input type="radio" name="ex5" onclick="answerMCQ('ex5',this,false)"> Dependent variable</label>
+          <label><input type="radio" name="ex5" onclick="answerMCQ('ex5',this,true)"> Independent variable</label>
         </div>
         <div class="feedback" id="fb-ex5"></div>
-        <div class="tip"><strong>Watch out:</strong> Time is usually the <strong>independent</strong> variable you set in an experiment. Here, though, time is what you're measuring the reaction's progress against as the outcome, so check carefully what the question is actually asking each time you see this style of question.</div>
+        <div class="tip"><strong>Watch out:</strong> Here you choose when to take each reading (every 30 seconds), so time is the <strong>independent</strong> variable and goes on the x axis. The volume of gas is what you measure, so it is the <strong>dependent</strong> variable on the y axis. Time is only the dependent variable when it is the thing you measure, such as the time for the cross to disappear.</div>
       </div>
 
       <div class="q">
@@ -509,7 +510,7 @@
       <div class="htier">
         <div class="htier-label">HIGHER TIER</div>
         <div class="htier-body">
-          <h4>11. Calculating rate from a graph using a tangent</h4>
+          <h4>11. Calculating the mean rate from a graph</h4>
           <p class="prompt">A graph shows loss of mass (g) against time (mins) for a reaction, with a curved decreasing line. Calculate the mean rate of reaction between 1 minute and 3 minutes, given that the loss of mass was 0.19 g at 1 minute and 0.34 g at 3 minutes. <em>(2 marks)</em></p>
           <textarea class="longans" id="ht1"></textarea>
           <br>
@@ -517,7 +518,7 @@
           <div class="modelans" id="mht1">
             Change in mass = 0.34 − 0.19 = 0.15 g. Change in time = 3 − 1 = 2 minutes.<br>
             Mean rate of reaction = 0.15 ÷ 2 = <strong>0.075 g/min</strong>
-            <div class="tip"><strong>Method:</strong> draw a tangent to the curve at each point of interest, then calculate the gradient between them using change in y ÷ change in x.</div>
+            <div class="tip"><strong>Method:</strong> a mean rate between two times is the change in the quantity ÷ the change in time, read straight off the curve. You only draw a tangent when a question asks for the rate at one particular time: draw it at that time, then its gradient (change in y ÷ change in x) is the rate.</div>
           </div>
 
           <h4 style="margin-top:16px;">12. Haber process equilibrium (Le Chatelier)</h4>
@@ -1027,9 +1028,8 @@
         <p><strong>Graphite:</strong> each carbon atom forms three covalent bonds, arranged in layers. High melting point. The layers have no covalent bonds between them, so they can slide over each other, and graphite is soft and slippery. Each carbon has one spare (delocalised) electron, which is free to move, so unlike diamond, <strong>graphite conducts electricity</strong>.</p>
       </div>
 
-      <div class="htier">
-        <div class="htier-label">HIGHER TIER</div>
-        <div class="htier-body">
+      <div class="learncard">
+        <div>
           <h4>Graphene and fullerenes</h4>
           <p><strong>Graphene</strong> is a single layer of graphite, one atom thick: a sheet of carbon atoms each bonded to three others in hexagons. It's strong, light, and conducts electricity (delocalised electrons), making it useful in electronics and composite materials.</p>
           <p><strong>Fullerenes</strong> are molecules of carbon atoms arranged as hollow shapes: tubes, spheres (like buckminsterfullerene, C₆₀), or other cages. Fullerenes can be used to deliver drugs into the body, as lubricants, and as catalysts. Carbon nanotubes are extremely strong and used to strengthen materials, and can conduct electricity due to delocalised electrons.</p>
@@ -1514,7 +1514,7 @@
       </div>
 
       <div class="learncard">
-        <h4>Extracting metals from low-grade ores: phytomining and bioleaching</h4>
+        <h4><span class="htag">HIGHER TIER</span>Extracting metals from low-grade ores: phytomining and bioleaching</h4>
         <p>As high-grade ores become scarcer, low-grade ores (with only a small amount of metal compound) are increasingly used. Traditional mining of low-grade ore uses huge amounts of energy and causes significant environmental damage from digging up and moving large amounts of rock. Two alternative methods are used instead:</p>
       </div>
 
@@ -1598,7 +1598,7 @@
       </div>
 
       <div class="q" id="xmcq4">
-        <p class="prompt">4. In phytomining, what happens after the plants are harvested?</p>
+        <p class="prompt"><span class="htag">HIGHER TIER</span>4. In phytomining, what happens after the plants are harvested?</p>
         <div class="options">
           <label><input type="radio" name="xmcq4" onclick="answerMCQ('xmcq4',this,true)"> They are burned to produce ash</label>
           <label><input type="radio" name="xmcq4" onclick="answerMCQ('xmcq4',this,false)"> They are dissolved in water</label>
@@ -1649,7 +1649,7 @@
       </div>
 
       <div class="q">
-        <p class="prompt">3. Describe how copper can be extracted from a low-grade ore using bioleaching. <em>(4 marks)</em></p>
+        <p class="prompt"><span class="htag">HIGHER TIER</span>3. Describe how copper can be extracted from a low-grade ore using bioleaching. <em>(4 marks)</em></p>
         <textarea class="longans" id="xex3" style="min-height:100px;"></textarea>
         <br>
         <button class="reveal-btn" onclick="toggleModel('xm3')">✅ Reveal model answer</button>
@@ -1659,7 +1659,7 @@
       </div>
 
       <div class="q">
-        <p class="prompt">4. Give one advantage and one disadvantage of using phytomining or bioleaching instead of traditional mining for a low-grade ore. <em>(2 marks)</em></p>
+        <p class="prompt"><span class="htag">HIGHER TIER</span>4. Give one advantage and one disadvantage of using phytomining or bioleaching instead of traditional mining for a low-grade ore. <em>(2 marks)</em></p>
         <textarea class="longans" id="xex4"></textarea>
         <br>
         <button class="reveal-btn" onclick="toggleModel('xm4')">✅ Reveal model answer</button>
@@ -1694,7 +1694,7 @@
     <div class="step-body">
       <div class="recap"><strong>Connecting back to Year 9: Recycling &amp; LCA:</strong> You looked at the environmental impact of using resources in Year 9. Phytomining and bioleaching are a good example of that same trade-off.</div>
       <div class="q">
-        <p class="prompt">(a) Explain one reason why phytomining or bioleaching might be considered a more sustainable choice than traditional mining. <em>(2 marks)</em></p>
+        <p class="prompt"><span class="htag">HIGHER TIER</span>(a) Explain one reason why phytomining or bioleaching might be considered a more sustainable choice than traditional mining. <em>(2 marks)</em></p>
         <textarea class="longans" id="xrc1"></textarea>
         <br>
         <button class="reveal-btn" onclick="toggleModel('mxrc1')">✅ Reveal answer</button>
